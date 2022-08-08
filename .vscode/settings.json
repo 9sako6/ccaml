@@ -1,0 +1,5 @@
+{
+  "dotfiles.repository": "https://github.com/9playground/minidotfiles.git",
+  "dotfiles.targetPath": "~/dotfiles",
+  "dotfiles.installCommand": "~/dotfiles/install.sh"
+}
