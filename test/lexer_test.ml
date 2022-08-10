@@ -1,7 +1,7 @@
 let test_tokenize () =
   Alcotest.(check (list string))
     "return 29 program"
-    [ "ID<int>"; "ID<main>"; "("; ")"; "{"; "ID<return>"; "INT<29>"; ";"; "}" ]
+    [ "INT"; "ID<main>"; "("; ")"; "{"; "RETURN"; "INT<29>"; ";"; "}" ]
     (List.map Lexer.token_to_string
        (Lexer.tokenize "int main(){\n    return 29;\n}"))
 
