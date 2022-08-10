@@ -1,7 +1,6 @@
 FROM ubuntu:20.04
 
 ENV LANG ja_JP.UTF-8
-ENV TZ Asia/Tokyo
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update \
@@ -13,9 +12,12 @@ RUN apt-get update \
   man \
   opam \
   sudo \
+  tzdata \
   vim \
   && apt-get -y clean \
   && rm -rf /var/lib/apt/lists/*
+
+ENV TZ Asia/Tokyo
 
 ARG USERNAME=9sako6
 ARG GROUPNAME=user
