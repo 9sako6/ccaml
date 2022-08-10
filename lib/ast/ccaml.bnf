@@ -1,0 +1,4 @@
+<program> ::= <function>
+<function> ::= "int" <id> "(" ")" "{" <statement> "}"
+<statement> ::= "return" <exp> ";"
+<exp> ::= <int>

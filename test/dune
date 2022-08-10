@@ -1,4 +1,4 @@
 (tests
- (names lexer_test util_test)
+ (names lexer_test util_test ast_inspect_test)
  (modes native)
  (libraries ccaml alcotest))

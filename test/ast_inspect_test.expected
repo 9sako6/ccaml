@@ -1,0 +1,31 @@
+int main() {
+    return 29;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ Const(value: 29)
+==========
+int main() {
+    return;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ Const(value: 0)
+==========
+int main() {}
+Program
+ ↳ Function(name: main)
+==========
+int main() {
+    return;
+    return 100;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ Const(value: 0)
+  ↳ Return
+   ↳ Const(value: 100)
+==========

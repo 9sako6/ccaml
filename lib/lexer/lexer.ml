@@ -73,3 +73,9 @@ let tokenize input =
         token :: tokens rest_sub_input
   in
   tokens input
+
+let rec inspect tokens =
+  match tokens with
+  | [] -> ""
+  | head :: [] -> "\"" ^ token_to_string head ^ "\""
+  | head :: rest -> "\"" ^ token_to_string head ^ "\"" ^ ", " ^ inspect rest

@@ -20,3 +20,4 @@ type token =
 
 val token_to_string : token -> string
 val tokenize : string -> token list
+val inspect : token list -> string
