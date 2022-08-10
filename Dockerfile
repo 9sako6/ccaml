@@ -40,7 +40,8 @@ RUN opam init --disable-sandboxing \
   && opam install --yes dune \
   utop \
   ocaml-lsp-server \
-  ocamlformat
+  ocamlformat \
+  alcotest
 
 RUN echo 'export PATH="~/.opam/${OCAML_VERSION}/bin:${PATH}"' >> ~/.bashrc \
   && echo 'eval $(opam env)' >> ~/.bashrc

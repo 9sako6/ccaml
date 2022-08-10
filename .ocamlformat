@@ -2,3 +2,4 @@ profile = default
 version = 0.24.1
 
 break-cases = fit-or-vertical
+type-decl = sparse

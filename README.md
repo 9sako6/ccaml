@@ -6,6 +6,6 @@
 
 ```bash
 dune build
-dune test
+dune runtest
 dune exec ccaml
 ```
