@@ -30,3 +30,6 @@ _opam/
 
 # Assembly
 *.s
+
+# Binary
+a.out

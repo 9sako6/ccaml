@@ -1,3 +1,3 @@
 (library
  (name ccaml)
- (libraries lexer util parser))
+ (libraries lexer util parser assembly))

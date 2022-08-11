@@ -1,20 +1,18 @@
-let program = "int main(){\n    return 29;\n}"
-let () = print_endline program
-let tokens = Lexer.tokenize program
-let () = print_endline (Lexer.inspect tokens)
-let ast = Parser.parse tokens
-let () = print_endline (Ast.inspect ast)
-let () = print_endline "--------"
-let program = "int main(){return 2; return 345;}"
-let () = print_endline program
-let tokens = Lexer.tokenize program
-let () = print_endline (Lexer.inspect tokens)
-let ast = Parser.parse tokens
-let () = print_endline (Ast.inspect ast)
-let () = print_endline "--------"
-let program = "int main(){}"
-let () = print_endline program
-let tokens = Lexer.tokenize program
-let () = print_endline (Lexer.inspect tokens)
-let ast = Parser.parse tokens
-let () = print_endline (Ast.inspect ast)
+let read file_name =
+  let ch = open_in file_name in
+  let s = really_input_string ch (in_channel_length ch) in
+  close_in ch;
+  s
+
+let write file_name text =
+  let ch = open_out file_name in
+  output_string ch text;
+  close_out ch;
+  ()
+
+let file_name = Sys.argv.(1)
+let program = read file_name
+
+let () =
+  Lexer.tokenize program |> Parser.parse |> Assembly.transpile
+  |> write "assembly.s"
