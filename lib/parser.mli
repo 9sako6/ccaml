@@ -1,1 +1,1 @@
-val parse : Lexer.token list -> Ast.program
+val parse : Token.token list -> Ast.program

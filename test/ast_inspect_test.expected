@@ -6,26 +6,59 @@ Program
   ↳ Return
    ↳ Const(value: 29)
 ==========
-int main() {
-    return;
-}
-Program
- ↳ Function(name: main)
-  ↳ Return
-   ↳ Const(value: 0)
-==========
 int main() {}
 Program
  ↳ Function(name: main)
 ==========
 int main() {
-    return;
+    return 2;
     return 100;
 }
 Program
  ↳ Function(name: main)
   ↳ Return
-   ↳ Const(value: 0)
+   ↳ Const(value: 2)
   ↳ Return
    ↳ Const(value: 100)
+==========
+int main() {
+    return -42;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ -
+    ↳ Const(value: 42)
+==========
+int main() {
+    return ~42;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ ~
+    ↳ Const(value: 42)
+==========
+int main() {
+    return !42;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ !
+    ↳ Const(value: 42)
+==========
+int main() {
+    return !~-~-!42;
+}
+Program
+ ↳ Function(name: main)
+  ↳ Return
+   ↳ !
+    ↳ ~
+     ↳ -
+      ↳ ~
+       ↳ -
+        ↳ !
+         ↳ Const(value: 42)
 ==========

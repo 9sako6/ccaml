@@ -1,11 +1,28 @@
-type exp = Const of int
+type unary_op =
+  | Negate (* - *)
+  | Complement (* ~ *)
+  | Not (* ! *)
+
+type exp =
+  | Const of int
+  | UnaryOp of unary_op * exp
+
 type statement = Return of exp
 type id = Id of string
 type function_def = Function of (id * statement list)
 type program = Program of function_def
 
-let inspect_exp indent = function
+let op_of_string = function
+  | Negate -> "-"
+  | Complement -> "~"
+  | Not -> "!"
+
+let rec inspect_exp indent = function
   | Const n -> Printf.sprintf "%s↳ Const(value: %s)\n" indent (string_of_int n)
+  | UnaryOp (operator, expression) ->
+      let next_indent = indent ^ " " in
+      Printf.sprintf "%s↳ %s\n%s" indent (op_of_string operator)
+        (inspect_exp next_indent expression)
 
 let inspect_statement indent = function
   | Return e ->

@@ -13,6 +13,9 @@ let write file_name text =
   ()
 
 let file_name = Sys.argv.(1)
+let ast = read file_name |> Lexer.tokenize |> Parser.parse
+let asm = Assembly.transpile ast
+let () = print_endline asm
 
 let () =
   read file_name |> Lexer.tokenize |> Parser.parse |> Assembly.transpile
