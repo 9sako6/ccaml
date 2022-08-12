@@ -11,8 +11,7 @@ let write file_name text =
   ()
 
 let file_name = Sys.argv.(1)
-let program = read file_name
 
 let () =
-  Lexer.tokenize program |> Parser.parse |> Assembly.transpile
+  read file_name |> Lexer.tokenize |> Parser.parse |> Assembly.transpile
   |> write "assembly.s"
