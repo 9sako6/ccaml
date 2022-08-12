@@ -1,3 +1,5 @@
+open Ccaml
+
 let test_transpile () =
   Alcotest.(check string)
     "return 29 program" "  .globl  main\nmain:\n  movl $29, %eax\n  ret\n"

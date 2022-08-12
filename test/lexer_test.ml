@@ -1,4 +1,4 @@
-open Lexer
+open Ccaml.Lexer
 
 let test_tokenize () =
   Alcotest.(check (list string))

@@ -1,3 +1,5 @@
+open Ccaml
+
 let test_split () =
   Alcotest.(check (list string))
     "split hello"

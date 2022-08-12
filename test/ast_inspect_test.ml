@@ -1,3 +1,5 @@
+open Ccaml
+
 let delimiter = "=========="
 
 (* with a single return statement with value *)

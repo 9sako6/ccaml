@@ -1,3 +1,5 @@
+open Ccaml
+
 let read file_name =
   let ch = open_in file_name in
   let s = really_input_string ch (in_channel_length ch) in
