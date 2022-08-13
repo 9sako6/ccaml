@@ -1,3 +1,3 @@
 int main() {
-    return 1 + (2 - 0) * 90;
+    return 3 + 7 + 2;
 }

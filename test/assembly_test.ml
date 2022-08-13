@@ -2,7 +2,7 @@ open Ccaml
 
 let test_transpile () =
   Alcotest.(check string)
-    "return 29 program" "  .globl  main\nmain:\n  movl $29, %eax\n  ret\n"
+    "return 29 program" ".globl  main\nmain:\n  mov $29, %rax\n  ret\n"
     ("int main(){\n    return 29;\n}" |> Lexer.tokenize |> Parser.parse
    |> Assembly.transpile)
 

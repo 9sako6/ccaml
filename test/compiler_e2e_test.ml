@@ -28,4 +28,5 @@ let _ =
       "sub_neg.c";
       "mult.c";
       "div.c";
+      "associativity.c";
     ]

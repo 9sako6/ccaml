@@ -1,13 +1,37 @@
 let rec parse_expression tokens =
   let open Token in
+  let construct_binary_op_exp op l r =
+    match op with
+    | Plus -> Ast.BinaryOp (Ast.Add, l, r)
+    | Minus -> Ast.BinaryOp (Ast.Sub, l, r)
+    | Asterisk -> Ast.BinaryOp (Ast.Mult, l, r)
+    | Slash -> Ast.BinaryOp (Ast.Div, l, r)
+    | _ -> failwith "Parse error. Invalid binary operator."
+  in
+
+  let parse_binary_op_exp parse_next operators tokens =
+    (* Join expressions of the same precedence for left-associative *)
+    let left_exp, rest = parse_next tokens in
+    let rec construct_exp left_exp tokens =
+      let operator = List.hd tokens in
+      if List.mem operator operators then
+        (* left-associative *)
+        let right_exp, rest = parse_next (List.tl tokens) in
+        let left_exp = construct_binary_op_exp operator left_exp right_exp in
+        construct_exp left_exp rest
+      else (left_exp, tokens)
+    in
+    construct_exp left_exp rest
+  in
+
   let rec parse_factor =
     let open Token in
     function
     (* "(" <exp> ")" *)
     | OpenParen :: factor -> (
-        let exp, rest = parse_expression factor in
-        match rest with
-        | CloseParen :: sub_rest -> (exp, sub_rest)
+        let exp, after_exp = parse_expression factor in
+        match after_exp with
+        | CloseParen :: rest -> (exp, rest)
         | _ -> failwith "Parse error. `)` is missing.")
     (* <unary_op> <factor> *)
     | Minus :: factor ->
@@ -22,28 +46,13 @@ let rec parse_expression tokens =
     (* <int> *)
     | Int n :: rest -> (Ast.Const n, rest)
     | _ -> failwith "Parse error. This is an invalid factor."
-  and parse_term ts =
-    let open Token in
-    let factor, after_factor = parse_factor ts in
-    match after_factor with
-    | Asterisk :: rest ->
-        let next_factor, after_next_factor = parse_factor rest in
-        (Ast.BinaryOp (Ast.Mult, factor, next_factor), after_next_factor)
-    | Slash :: rest ->
-        let next_factor, after_next_factor = parse_factor rest in
-        (Ast.BinaryOp (Ast.Div, factor, next_factor), after_next_factor)
-    | _ -> (factor, after_factor)
   in
 
-  let term, after_term = parse_term tokens in
-  match after_term with
-  | Plus :: rest ->
-      let next_term, after_next_term = parse_expression rest in
-      (Ast.BinaryOp (Ast.Add, term, next_term), after_next_term)
-  | Minus :: rest ->
-      let next_term, after_next_term = parse_expression rest in
-      (Ast.BinaryOp (Ast.Sub, term, next_term), after_next_term)
-  | _ -> (term, after_term)
+  let parse_term = parse_binary_op_exp parse_factor [ Asterisk; Slash ] in
+
+  let parse_exp = parse_binary_op_exp parse_term [ Plus; Minus ] in
+
+  parse_exp tokens
 
 let parse_statements tokens =
   let open Token in

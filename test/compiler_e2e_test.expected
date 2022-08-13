@@ -1,54 +1,134 @@
 -- return_29.c --
-  .globl  main
+.globl  main
 main:
-  movl $29, %eax
+  mov $29, %rax
   ret
 
 -- return_exclamation_1.c --
-  .globl  main
+.globl  main
 main:
-  movl $0, %eax
+  mov $1, %rax
+  cmp $0, %rax
+  sete %al
+  movzb %al, %rax
   ret
 
 -- return_minus_42.c --
-  .globl  main
+.globl  main
 main:
-  movl $-42, %eax
+  mov $42, %rax
+  neg %rax
   ret
 
 -- return_tilde_42.c --
-  .globl  main
+.globl  main
 main:
-  movl $-43, %eax
+  mov $42, %rax
+  not %rax
   ret
 
 -- add.c --
-  .globl  main
+.globl  main
 main:
-  movl $181, %eax
+  mov $3, %rax
+  pushq %rax
+  mov $7, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
   ret
 
 -- sub.c --
-  .globl  main
+.globl  main
 main:
-  movl $-1, %eax
+  mov $3, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
   ret
 
 -- sub_neg.c --
-  .globl  main
+.globl  main
 main:
-  movl $3, %eax
+  mov $2, %rax
+  pushq %rax
+  mov $1, %rax
+  neg %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
   ret
 
 -- mult.c --
-  .globl  main
+.globl  main
 main:
-  movl $6, %eax
+  mov $2, %rax
+  pushq %rax
+  mov $3, %rax
+  mov %rax, %rcx
+  popq %rax
+  imul %rcx, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  imul %rcx, %rax
   ret
 
 -- div.c --
-  .globl  main
+.globl  main
 main:
-  movl $5, %eax
+  mov $20, %rax
+  pushq %rax
+  mov $4, %rax
+  mov %rax, %rcx
+  popq %rax
+  cqo
+  idiv %rcx
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  cqo
+  idiv %rcx
+  ret
+
+-- associativity.c --
+.globl  main
+main:
+  mov $31, %rax
+  pushq %rax
+  mov $2, %rax
+  pushq %rax
+  mov $3, %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  pushq %rax
+  mov $6, %rax
+  pushq %rax
+  mov $7, %rax
+  mov %rax, %rcx
+  popq %rax
+  imul %rcx, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  cqo
+  idiv %rcx
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
   ret
 
