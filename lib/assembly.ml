@@ -6,6 +6,14 @@ let transpile ast =
     | UnaryOp (Negate, exp) -> -calc_expression exp
     | UnaryOp (Complement, exp) -> lnot (calc_expression exp)
     | UnaryOp (Not, exp) -> if 0 = calc_expression exp then 1 else 0
+    | BinaryOp (Add, left, right) ->
+        calc_expression left + calc_expression right
+    | BinaryOp (Sub, left, right) ->
+        calc_expression left - calc_expression right
+    | BinaryOp (Mult, left, right) ->
+        calc_expression left * calc_expression right
+    | BinaryOp (Div, left, right) ->
+        calc_expression left / calc_expression right
   and generate_expression exp =
     s := !s ^ Printf.sprintf "  movl $%d, %%eax\n" (calc_expression exp);
     ()

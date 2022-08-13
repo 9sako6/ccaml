@@ -16,8 +16,16 @@ let _ =
   in
   run
     [
+      (* return statement *)
       "return_29.c";
+      (* unary operators *)
       "return_exclamation_1.c";
       "return_minus_42.c";
       "return_tilde_42.c";
+      (* binary operators *)
+      "add.c";
+      "sub.c";
+      "sub_neg.c";
+      "mult.c";
+      "div.c";
     ]

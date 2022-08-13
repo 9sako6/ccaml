@@ -22,3 +22,33 @@ main:
   movl $-43, %eax
   ret
 
+-- add.c --
+  .globl  main
+main:
+  movl $181, %eax
+  ret
+
+-- sub.c --
+  .globl  main
+main:
+  movl $-1, %eax
+  ret
+
+-- sub_neg.c --
+  .globl  main
+main:
+  movl $3, %eax
+  ret
+
+-- mult.c --
+  .globl  main
+main:
+  movl $6, %eax
+  ret
+
+-- div.c --
+  .globl  main
+main:
+  movl $5, %eax
+  ret
+

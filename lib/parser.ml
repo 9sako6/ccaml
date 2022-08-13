@@ -1,17 +1,49 @@
 let rec parse_expression tokens =
   let open Token in
-  match tokens with
+  let rec parse_factor =
+    let open Token in
+    function
+    (* "(" <exp> ")" *)
+    | OpenParen :: factor -> (
+        let exp, rest = parse_expression factor in
+        match rest with
+        | CloseParen :: sub_rest -> (exp, sub_rest)
+        | _ -> failwith "Parse error. `)` is missing.")
+    (* <unary_op> <factor> *)
+    | Minus :: factor ->
+        let exp, rest = parse_factor factor in
+        (Ast.UnaryOp (Ast.Negate, exp), rest)
+    | Tilde :: factor ->
+        let exp, rest = parse_factor factor in
+        (Ast.UnaryOp (Ast.Complement, exp), rest)
+    | Exclamation :: factor ->
+        let exp, rest = parse_factor factor in
+        (Ast.UnaryOp (Ast.Not, exp), rest)
+    (* <int> *)
+    | Int n :: rest -> (Ast.Const n, rest)
+    | _ -> failwith "Parse error. This is an invalid factor."
+  and parse_term ts =
+    let open Token in
+    let factor, after_factor = parse_factor ts in
+    match after_factor with
+    | Asterisk :: rest ->
+        let next_factor, after_next_factor = parse_factor rest in
+        (Ast.BinaryOp (Ast.Mult, factor, next_factor), after_next_factor)
+    | Slash :: rest ->
+        let next_factor, after_next_factor = parse_factor rest in
+        (Ast.BinaryOp (Ast.Div, factor, next_factor), after_next_factor)
+    | _ -> (factor, after_factor)
+  in
+
+  let term, after_term = parse_term tokens in
+  match after_term with
+  | Plus :: rest ->
+      let next_term, after_next_term = parse_expression rest in
+      (Ast.BinaryOp (Ast.Add, term, next_term), after_next_term)
   | Minus :: rest ->
-      let exp, sub_rest = parse_expression rest in
-      (Ast.UnaryOp (Ast.Negate, exp), sub_rest)
-  | Exclamation :: rest ->
-      let exp, sub_rest = parse_expression rest in
-      (Ast.UnaryOp (Ast.Not, exp), sub_rest)
-  | Tilde :: rest ->
-      let exp, sub_rest = parse_expression rest in
-      (Ast.UnaryOp (Ast.Complement, exp), sub_rest)
-  | Int n :: rest -> (Ast.Const n, rest)
-  | _ -> failwith "Parse error. Invalid operator."
+      let next_term, after_next_term = parse_expression rest in
+      (Ast.BinaryOp (Ast.Sub, term, next_term), after_next_term)
+  | _ -> (term, after_term)
 
 let parse_statements tokens =
   let open Token in

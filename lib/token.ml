@@ -9,8 +9,14 @@ type token =
   | CloseParen
   (* ; *)
   | Semicolon
+  (* + *)
+  | Plus
   (* - *)
   | Minus
+  (* * *)
+  | Asterisk
+  (* / *)
+  | Slash
   (* ~ *)
   | Tilde
   (* ! *)
@@ -31,6 +37,9 @@ let to_string = function
   | CloseParen -> ")"
   | Semicolon -> ";"
   | Minus -> "-"
+  | Plus -> "+"
+  | Asterisk -> "*"
+  | Slash -> "/"
   | Tilde -> "~"
   | Exclamation -> "!"
   | ReturnKeyword -> "RETURN"

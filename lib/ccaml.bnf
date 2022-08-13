@@ -1,5 +1,8 @@
 <program> ::= <function>
 <function> ::= "int" <id> "(" ")" "{" <statement> "}"
 <statement> ::= "return" <exp> ";"
-<exp> ::= <unary_op> <exp> | <int>
+<exp> ::= <term> { ("+" | "-") <term> }
+<term> ::= <factor> { ("*" | "/") <factor> }
+/* <factor> is a symbol for unary operators. <factor> has higher precedence than binary operators. */
+<factor> ::= "(" <exp> ")" | <unary_op> <factor> | <int>
 <unary_op> ::= "!" | "-" | "~"

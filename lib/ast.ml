@@ -3,26 +3,46 @@ type unary_op =
   | Complement (* ~ *)
   | Not (* ! *)
 
+type binary_op =
+  | Add
+  | Sub
+  | Mult
+  | Div
+
 type exp =
   | Const of int
   | UnaryOp of unary_op * exp
+  | BinaryOp of binary_op * exp * exp
 
 type statement = Return of exp
 type id = Id of string
 type function_def = Function of (id * statement list)
 type program = Program of function_def
 
-let op_of_string = function
-  | Negate -> "-"
-  | Complement -> "~"
-  | Not -> "!"
-
-let rec inspect_exp indent = function
+let rec inspect_exp indent =
+  let next_indent = indent ^ " " in
+  function
   | Const n -> Printf.sprintf "%s↳ Const(value: %s)\n" indent (string_of_int n)
   | UnaryOp (operator, expression) ->
-      let next_indent = indent ^ " " in
-      Printf.sprintf "%s↳ %s\n%s" indent (op_of_string operator)
+      let operator =
+        match operator with
+        | Negate -> "-"
+        | Complement -> "~"
+        | Not -> "!"
+      in
+      Printf.sprintf "%s↳ %s\n%s" indent operator
         (inspect_exp next_indent expression)
+  | BinaryOp (operator, left_exp, right_exp) ->
+      let operator =
+        match operator with
+        | Add -> "+"
+        | Sub -> "-"
+        | Mult -> "*"
+        | Div -> "/"
+      in
+      Printf.sprintf "%s↳ %s\n%s%s" indent operator
+        (inspect_exp next_indent left_exp)
+        (inspect_exp next_indent right_exp)
 
 let inspect_statement indent = function
   | Return e ->
