@@ -3,40 +3,35 @@ open Ccaml
 let delimiter = "--"
 
 (* Tests are executed in ./_build/default/test *)
-let c_path file_name = Unix.realpath "../../../examples" ^ "/" ^ file_name
+let c_path file_name = Unix.realpath "../../../examples/valid" ^ "/" ^ file_name
+let valid_c_files = Sys.readdir "../../../examples/valid" |> Array.to_list
 
+(* Check generated assembly. *)
 let _ =
   let rec run files =
     match files with
     | [] -> ()
-    | head :: rest ->
-        print_endline (delimiter ^ " " ^ head ^ " " ^ delimiter);
-        c_path head |> Compiler.compile;
+    | file_name :: rest ->
+        print_endline (delimiter ^ " " ^ file_name ^ " " ^ delimiter);
+        c_path file_name |> Compiler.compile;
         run rest
   in
-  run
-    [
-      (* return statement *)
-      "return_29.c";
-      (* unary operators *)
-      "return_exclamation_1.c";
-      "return_minus_42.c";
-      "return_tilde_42.c";
-      (* binary operators *)
-      "add.c";
-      "sub.c";
-      "sub_neg.c";
-      "mult.c";
-      "div.c";
-      "associativity.c";
-      "associativity2.c";
-      "and.c";
-      "or.c";
-      "or2.c";
-      "eq.c";
-      "not_eq.c";
-      "less.c";
-      "less_or_equal.c";
-      "greater.c";
-      "greater_or_equal.c";
-    ]
+  run valid_c_files
+
+(* Check exit code. *)
+let _ =
+  let rec run files =
+    match files with
+    | [] -> ()
+    | file_name :: rest -> (
+        print_endline (delimiter ^ " " ^ file_name ^ " " ^ delimiter);
+        Util.read (c_path file_name)
+        |> Lexer.tokenize |> Parser.parse |> Assembly.transpile
+        |> Util.write "asm.s";
+        match Unix.system "gcc asm.s && ./a.out" with
+        | WEXITED code ->
+            print_endline (string_of_int code);
+            run rest
+        | _ -> failwith "Unexpected exit code.")
+  in
+  run valid_c_files
