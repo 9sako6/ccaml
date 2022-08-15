@@ -9,3 +9,10 @@ let rec split str =
 let rec join = function
   | [] -> ""
   | head :: rest -> head ^ join rest
+
+let counter = ref 0
+
+let unique_id () =
+  let id = !counter in
+  incr counter;
+  id

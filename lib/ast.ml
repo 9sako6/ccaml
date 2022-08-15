@@ -8,6 +8,14 @@ type binary_op =
   | Sub
   | Mult
   | Div
+  | And
+  | Or
+  | Equal
+  | NotEqual
+  | LessThan
+  | LessThanOrEqual
+  | GreaterThan
+  | GreaterThanOrEqual
 
 type exp =
   | Const of int
@@ -39,6 +47,14 @@ let rec inspect_exp indent =
         | Sub -> "-"
         | Mult -> "*"
         | Div -> "/"
+        | And -> "&&"
+        | Or -> "||"
+        | Equal -> "=="
+        | NotEqual -> "!="
+        | LessThan -> "<"
+        | LessThanOrEqual -> "<="
+        | GreaterThan -> ">"
+        | GreaterThanOrEqual -> ">="
       in
       Printf.sprintf "%s↳ %s\n%s%s" indent operator
         (inspect_exp next_indent left_exp)

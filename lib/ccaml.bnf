@@ -1,8 +1,12 @@
 <program> ::= <function>
 <function> ::= "int" <id> "(" ")" "{" <statement> "}"
 <statement> ::= "return" <exp> ";"
-<exp> ::= <term> { ("+" | "-") <term> }
-<term> ::= <factor> { ("*" | "/") <factor> }
+<exp> ::= <and-exp> { "||" <and-exp> }
+<and-exp> ::= <equality-exp> { "&&" <equality-exp> }
+<equality-exp> ::= <comparison-exp> { ("==" | "!=" ) <comparison-exp> }
+<comparison-exp> ::= <add-sub-exp> { ("<" | "<=" | ">" | ">=" ) <add-sub-exp> }
+<add-sub-exp> ::= <mult-div-exp> { ("+" | "-") <mult-div-exp> }
+<mult-div-exp> ::= <factor> { ("*" | "/") <factor> }
 /* <factor> is a symbol for unary operators. <factor> has higher precedence than binary operators. */
 <factor> ::= "(" <exp> ")" | <unary_op> <factor> | <int>
 <unary_op> ::= "!" | "-" | "~"

@@ -13,7 +13,10 @@ let token_length =
   | Asterisk
   | Slash
   | Tilde
+  | LessThan
+  | GreaterThan
   | Exclamation -> 1
+  | And | Or | EqualEqual | GreaterThanOrEqual | LessThanOrEqual | NotEqual -> 2
   | ReturnKeyword -> 6
   | IntKeyword -> 3
   | Int i -> String.length (string_of_int i)
@@ -51,7 +54,15 @@ let tokenize input =
     | "*" :: rest -> Asterisk :: tokens (Util.join rest)
     | "/" :: rest -> Slash :: tokens (Util.join rest)
     | "~" :: rest -> Tilde :: tokens (Util.join rest)
+    | "!" :: "=" :: rest -> NotEqual :: tokens (Util.join rest)
     | "!" :: rest -> Exclamation :: tokens (Util.join rest)
+    | "&" :: "&" :: rest -> And :: tokens (Util.join rest)
+    | "|" :: "|" :: rest -> Or :: tokens (Util.join rest)
+    | "=" :: "=" :: rest -> EqualEqual :: tokens (Util.join rest)
+    | "<" :: "=" :: rest -> LessThanOrEqual :: tokens (Util.join rest)
+    | "<" :: rest -> LessThan :: tokens (Util.join rest)
+    | ">" :: "=" :: rest -> GreaterThanOrEqual :: tokens (Util.join rest)
+    | ">" :: rest -> GreaterThan :: tokens (Util.join rest)
     | _ :: _ ->
         let token = get_int_or_id_token sub_input in
         let token_length = token_length token in

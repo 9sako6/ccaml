@@ -6,6 +6,14 @@ let rec parse_expression tokens =
     | Minus -> Ast.BinaryOp (Ast.Sub, l, r)
     | Asterisk -> Ast.BinaryOp (Ast.Mult, l, r)
     | Slash -> Ast.BinaryOp (Ast.Div, l, r)
+    | And -> Ast.BinaryOp (Ast.And, l, r)
+    | Or -> Ast.BinaryOp (Ast.Or, l, r)
+    | EqualEqual -> Ast.BinaryOp (Ast.Equal, l, r)
+    | NotEqual -> Ast.BinaryOp (Ast.NotEqual, l, r)
+    | LessThan -> Ast.BinaryOp (Ast.LessThan, l, r)
+    | LessThanOrEqual -> Ast.BinaryOp (Ast.LessThanOrEqual, l, r)
+    | GreaterThan -> Ast.BinaryOp (Ast.GreaterThan, l, r)
+    | GreaterThanOrEqual -> Ast.BinaryOp (Ast.GreaterThanOrEqual, l, r)
     | _ -> failwith "Parse error. Invalid binary operator."
   in
 
@@ -48,11 +56,28 @@ let rec parse_expression tokens =
     | _ -> failwith "Parse error. This is an invalid factor."
   in
 
-  let parse_term = parse_binary_op_exp parse_factor [ Asterisk; Slash ] in
+  let parse_mult_div_exp =
+    parse_binary_op_exp parse_factor [ Asterisk; Slash ]
+  in
 
-  let parse_exp = parse_binary_op_exp parse_term [ Plus; Minus ] in
+  let parse_add_sub_exp =
+    parse_binary_op_exp parse_mult_div_exp [ Plus; Minus ]
+  in
 
-  parse_exp tokens
+  let parse_comparison_exp =
+    parse_binary_op_exp parse_add_sub_exp
+      [ LessThan; LessThanOrEqual; GreaterThan; GreaterThanOrEqual ]
+  in
+
+  let parse_equality_exp =
+    parse_binary_op_exp parse_comparison_exp [ EqualEqual; NotEqual ]
+  in
+
+  let parse_and_exp = parse_binary_op_exp parse_equality_exp [ And ] in
+
+  let parse_or_exp = parse_binary_op_exp parse_and_exp [ Or ] in
+
+  parse_or_exp tokens
 
 let parse_statements tokens =
   let open Token in
@@ -71,7 +96,9 @@ let parse_statements tokens =
   let statements, rest = partition tokens in
   match rest with
   | CloseBrace :: [] -> statements
-  | _ -> failwith "Parse error. `}` is missing."
+  | _ ->
+      let _ = print_endline (Lexer.inspect rest) in
+      failwith "Parse error. `}` is missing."
 
 let parse_function_def tokens =
   let open Token in

@@ -29,4 +29,14 @@ let _ =
       "mult.c";
       "div.c";
       "associativity.c";
+      "associativity2.c";
+      "and.c";
+      "or.c";
+      "or2.c";
+      "eq.c";
+      "not_eq.c";
+      "less.c";
+      "less_or_equal.c";
+      "greater.c";
+      "greater_or_equal.c";
     ]

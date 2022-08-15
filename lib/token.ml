@@ -21,6 +21,22 @@ type token =
   | Tilde
   (* ! *)
   | Exclamation
+  (* && *)
+  | And
+  (* || *)
+  | Or
+  (* == *)
+  | EqualEqual
+  (* != *)
+  | NotEqual
+  (* < *)
+  | LessThan
+  (* <= *)
+  | LessThanOrEqual
+  (* > *)
+  | GreaterThan
+  (* >= *)
+  | GreaterThanOrEqual
   (* int *)
   | IntKeyword
   (* return *)
@@ -42,6 +58,14 @@ let to_string = function
   | Slash -> "/"
   | Tilde -> "~"
   | Exclamation -> "!"
+  | And -> "&&"
+  | Or -> "||"
+  | EqualEqual -> "=="
+  | NotEqual -> "!="
+  | LessThan -> "<"
+  | LessThanOrEqual -> "<="
+  | GreaterThan -> ">"
+  | GreaterThanOrEqual -> ">="
   | ReturnKeyword -> "RETURN"
   | IntKeyword -> "INT"
   | Int i -> Printf.sprintf "INT<%d>" i

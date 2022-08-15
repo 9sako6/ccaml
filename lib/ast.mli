@@ -3,11 +3,19 @@ type unary_op =
   | Complement (* ~ *)
   | Not (* ! *)
 
-type binary_op =
+  type binary_op =
   | Add
   | Sub
   | Mult
   | Div
+  | And
+  | Or
+  | Equal
+  | NotEqual
+  | LessThan
+  | LessThanOrEqual
+  | GreaterThan
+  | GreaterThanOrEqual
 
 type exp =
   | Const of int

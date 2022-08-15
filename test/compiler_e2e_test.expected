@@ -132,3 +132,187 @@ main:
   sub %rcx, %rax
   ret
 
+-- associativity2.c --
+.globl  main
+main:
+  mov $31, %rax
+  pushq %rax
+  mov $2, %rax
+  pushq %rax
+  mov $3, %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  pushq %rax
+  mov $6, %rax
+  pushq %rax
+  mov $7, %rax
+  mov %rax, %rcx
+  popq %rax
+  imul %rcx, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  cqo
+  idiv %rcx
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  pushq %rax
+  mov $9, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  sete %al
+  movzb %al, %rax
+  cmp $0, %rax
+  je right_of_or_clause_0
+  mov $1, %rax
+  jmp goal_of_or_clause_0
+right_of_or_clause_0:
+  mov $1, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_0:
+  ret
+
+-- and.c --
+.globl  main
+main:
+  mov $1, %rax
+  cmp $0, %rax
+  jne right_of_and_clause_1
+  jmp goal_of_and_clause_1
+right_of_and_clause_1:
+  mov $4, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_and_clause_1:
+  ret
+
+-- or.c --
+.globl  main
+main:
+  mov $2, %rax
+  cmp $0, %rax
+  je right_of_or_clause_2
+  mov $1, %rax
+  jmp goal_of_or_clause_2
+right_of_or_clause_2:
+  mov $0, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_2:
+  ret
+
+-- or2.c --
+.globl  main
+main:
+  mov $0, %rax
+  cmp $0, %rax
+  je right_of_or_clause_4
+  mov $1, %rax
+  jmp goal_of_or_clause_4
+right_of_or_clause_4:
+  mov $0, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_4:
+  cmp $0, %rax
+  je right_of_or_clause_3
+  mov $1, %rax
+  jmp goal_of_or_clause_3
+right_of_or_clause_3:
+  mov $1, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_3:
+  ret
+
+-- eq.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  sete %al
+  movzb %al, %rax
+  ret
+
+-- not_eq.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setne %al
+  movzb %al, %rax
+  ret
+
+-- less.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setl %al
+  movzb %al, %rax
+  ret
+
+-- less_or_equal.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setle %al
+  movzb %al, %rax
+  ret
+
+-- greater.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setg %al
+  movzb %al, %rax
+  ret
+
+-- greater_or_equal.c --
+.globl  main
+main:
+  mov $1, %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setge %al
+  movzb %al, %rax
+  ret
+
