@@ -8,6 +8,7 @@ let token_length =
   | OpenParen
   | CloseParen
   | Semicolon
+  | Equal
   | Minus
   | Plus
   | Asterisk

@@ -25,6 +25,8 @@ type token =
   | And
   (* || *)
   | Or
+  (* = *)
+  | Equal
   (* == *)
   | EqualEqual
   (* != *)
@@ -60,6 +62,7 @@ let to_string = function
   | Exclamation -> "!"
   | And -> "&&"
   | Or -> "||"
+  | Equal -> "="
   | EqualEqual -> "=="
   | NotEqual -> "!="
   | LessThan -> "<"
