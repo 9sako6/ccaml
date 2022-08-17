@@ -3,7 +3,7 @@ type unary_op =
   | Complement (* ~ *)
   | Not (* ! *)
 
-  type binary_op =
+type binary_op =
   | Add
   | Sub
   | Mult

@@ -1,4 +1,10 @@
 (tests
- (names lexer_test util_test parser_test ast_inspect_test assembly_test compiler_e2e_test)
+ (names
+  lexer_test
+  util_test
+  parser_test
+  ast_inspect_test
+  assembly_test
+  compiler_e2e_test)
  (modes native)
  (libraries ccaml alcotest))
