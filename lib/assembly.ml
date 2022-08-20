@@ -37,6 +37,8 @@ let transpile ast =
     | _ -> ()
   in
   let rec generate_expression = function
+    | Var _name -> ()
+    | Assign (_name, _exp) -> ()
     | Const n -> print_asm (Printf.sprintf "  mov $%d, %%rax" n)
     | UnaryOp (Negate, exp) ->
         generate_expression exp;
