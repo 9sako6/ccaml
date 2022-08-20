@@ -78,15 +78,13 @@ let rec parse_expression tokens =
 
   let parse_or_exp = parse_binary_op_exp parse_and_exp [ Or ] in
 
-  let rec parse_exp tokens =
-    match tokens with
+  let rec parse_exp = function
     | Id name :: Equal :: rest ->
         let exp, sub_rest = parse_exp rest in
         (Ast.Assign (name, exp), sub_rest)
-    | _ -> parse_or_exp tokens
+    | tokens -> parse_or_exp tokens
   in
 
-  (* parse_or_exp tokens *)
   parse_exp tokens
 
 let parse_statements tokens =
@@ -105,7 +103,7 @@ let parse_statements tokens =
         let expression, rest = parse_expression rest in
         let other_statements, rest = partition rest in
         (Ast.Declare (name, Some expression) :: other_statements, rest)
-    | (Id _ as var) :: Equal :: rest ->
+    | (Id _name as var) :: Equal :: rest ->
         let expression, rest = parse_expression (var :: Equal :: rest) in
         let other_statements, rest = partition rest in
         (Ast.Exp expression :: other_statements, rest)
