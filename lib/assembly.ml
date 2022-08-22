@@ -98,11 +98,24 @@ let transpile ast =
         (* Get the result of left expression. *)
         print_asm "  popq %rax";
         generate_binary_operation op
-  and generate_function_body = function
-    | Return exp :: _ ->
+  in
+  let rec generate_function_body = function
+    | [] -> ()
+    | Return exp :: rest ->
         generate_expression exp;
-        print_asm "  ret"
-    | _ -> failwith "Transpile error."
+        print_asm "  ret";
+        generate_function_body rest;
+        ()
+    | Exp exp :: rest ->
+        generate_expression exp;
+        generate_function_body rest
+    | Declare (_name, exp_option) :: rest ->
+        let () =
+          match exp_option with
+          | None -> ()
+          | Some exp -> generate_expression exp
+        in
+        generate_function_body rest
   and generate_function_def = function
     | Function (Id name, statements) ->
         print_asm (Printf.sprintf "%s:" name);
