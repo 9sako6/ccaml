@@ -18,11 +18,19 @@ type binary_op =
   | GreaterThanOrEqual
 
 type exp =
+  | Var of string (* string is variable name *)
+  | Assign of string * exp (* string is variable name *)
   | Const of int
   | UnaryOp of unary_op * exp
   | BinaryOp of binary_op * exp * exp
 
-type statement = Return of exp
+type statement =
+  | Return of exp
+  | Exp of exp
+  | Declare of
+      string
+      * exp option (* string is variable name, exp is optional initializer *)
+
 type id = Id of string
 type function_def = Function of (id * statement list)
 type program = Program of function_def
@@ -30,6 +38,10 @@ type program = Program of function_def
 let rec inspect_exp indent =
   let next_indent = indent ^ " " in
   function
+  | Var name -> Printf.sprintf "%s↳ Var(name: %s)\n" indent name
+  | Assign (name, exp) ->
+      Printf.sprintf "%s↳ Assign(name: %s)\n%s" indent name
+        (inspect_exp (indent ^ " ") exp)
   | Const n -> Printf.sprintf "%s↳ Const(value: %s)\n" indent (string_of_int n)
   | UnaryOp (operator, expression) ->
       let operator =
@@ -61,8 +73,16 @@ let rec inspect_exp indent =
         (inspect_exp next_indent right_exp)
 
 let inspect_statement indent = function
-  | Return e ->
-      Printf.sprintf "%s↳ Return\n%s" indent (inspect_exp (indent ^ " ") e)
+  | Return exp ->
+      Printf.sprintf "%s↳ Return\n%s" indent (inspect_exp (indent ^ " ") exp)
+  | Exp exp ->
+      Printf.sprintf "%s↳ Exp\n%s" indent (inspect_exp (indent ^ " ") exp)
+  | Declare (name, exp_option) -> (
+      match exp_option with
+      | Some exp ->
+          let exp_string = inspect_exp (indent ^ " ") exp in
+          Printf.sprintf "%s↳ Declare(name: %s)\n%s" indent name exp_string
+      | None -> Printf.sprintf "%s↳ Declare(name: %s)\n" indent name)
 
 let inspect_function_def indent = function
   | Function (Id name, statements) ->

@@ -8,6 +8,7 @@ let token_length =
   | OpenParen
   | CloseParen
   | Semicolon
+  | Equal
   | Minus
   | Plus
   | Asterisk
@@ -59,6 +60,7 @@ let tokenize input =
     | "&" :: "&" :: rest -> And :: tokens (Util.join rest)
     | "|" :: "|" :: rest -> Or :: tokens (Util.join rest)
     | "=" :: "=" :: rest -> EqualEqual :: tokens (Util.join rest)
+    | "=" :: rest -> Equal :: tokens (Util.join rest)
     | "<" :: "=" :: rest -> LessThanOrEqual :: tokens (Util.join rest)
     | "<" :: rest -> LessThan :: tokens (Util.join rest)
     | ">" :: "=" :: rest -> GreaterThanOrEqual :: tokens (Util.join rest)

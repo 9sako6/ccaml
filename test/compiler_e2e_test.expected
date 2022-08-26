@@ -1,6 +1,8 @@
 -- add.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $3, %rax
   pushq %rax
   mov $7, %rax
@@ -12,11 +14,15 @@ main:
   mov %rax, %rcx
   popq %rax
   add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- and.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
   jne right_of_and_clause_0
@@ -27,11 +33,51 @@ right_of_and_clause_0:
   setne %al
   movzb %al, %rax
 goal_of_and_clause_0:
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- assign.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $2, %rax
+  mov %rax, -8(%rbp)
+  mov $4, %rax
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- assign2.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $2, %rax
+  mov %rax, -8(%rbp)
+  sub $8, %rsp
+  mov $3, %rax
+  mov %rax, -16(%rbp)
+  mov -8(%rbp), %rax
+  pushq %rax
+  mov -16(%rbp), %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- associativity.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $31, %rax
   pushq %rax
   mov $2, %rax
@@ -59,11 +105,15 @@ main:
   mov %rax, %rcx
   popq %rax
   sub %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- associativity2.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $31, %rax
   pushq %rax
   mov $2, %rax
@@ -108,11 +158,28 @@ right_of_or_clause_1:
   setne %al
   movzb %al, %rax
 goal_of_or_clause_1:
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- declare_var.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $2, %rax
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- div.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $20, %rax
   pushq %rax
   mov $4, %rax
@@ -126,11 +193,15 @@ main:
   popq %rax
   cqo
   idiv %rcx
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- eq.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -139,11 +210,15 @@ main:
   cmp %rcx, %rax
   sete %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- greater.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -152,11 +227,15 @@ main:
   cmp %rcx, %rax
   setg %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- greater_or_equal.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -165,11 +244,15 @@ main:
   cmp %rcx, %rax
   setge %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- less.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -178,11 +261,15 @@ main:
   cmp %rcx, %rax
   setl %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- less_or_equal.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -191,11 +278,15 @@ main:
   cmp %rcx, %rax
   setle %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- mult.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $2, %rax
   pushq %rax
   mov $3, %rax
@@ -207,11 +298,15 @@ main:
   mov %rax, %rcx
   popq %rax
   imul %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- not_eq.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   pushq %rax
   mov $0, %rax
@@ -220,11 +315,15 @@ main:
   cmp %rcx, %rax
   setne %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- or.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $2, %rax
   cmp $0, %rax
   je right_of_or_clause_2
@@ -236,11 +335,15 @@ right_of_or_clause_2:
   setne %al
   movzb %al, %rax
 goal_of_or_clause_2:
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- or2.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $0, %rax
   cmp $0, %rax
   je right_of_or_clause_4
@@ -262,51 +365,75 @@ right_of_or_clause_3:
   setne %al
   movzb %al, %rax
 goal_of_or_clause_3:
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- return_29.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $29, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- return_exclamation_1.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
   sete %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- return_minus_42.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $42, %rax
   neg %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- return_tilde_42.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $42, %rax
   not %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- sub.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $3, %rax
   pushq %rax
   mov $2, %rax
   mov %rax, %rcx
   popq %rax
   sub %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- sub_neg.c --
 .globl  main
 main:
+  push %rbp
+  movq %rsp, %rbp
   mov $2, %rax
   pushq %rax
   mov $1, %rax
@@ -314,16 +441,24 @@ main:
   mov %rax, %rcx
   popq %rax
   sub %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
   ret
 
 -- add.c --
 12
 -- and.c --
 1
+-- assign.c --
+4
+-- assign2.c --
+5
 -- associativity.c --
 9
 -- associativity2.c --
 1
+-- declare_var.c --
+2
 -- div.c --
 2
 -- eq.c --
