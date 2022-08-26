@@ -322,6 +322,8 @@ main:
 1
 -- assign.c --
 4
+-- assign2.c --
+5
 -- associativity.c --
 9
 -- associativity2.c --
