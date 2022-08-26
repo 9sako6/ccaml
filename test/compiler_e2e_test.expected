@@ -320,10 +320,14 @@ main:
 12
 -- and.c --
 1
+-- assign.c --
+4
 -- associativity.c --
 9
 -- associativity2.c --
 1
+-- declare_var.c --
+2
 -- div.c --
 2
 -- eq.c --

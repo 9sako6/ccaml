@@ -37,8 +37,10 @@ let transpile ast =
     | _ -> ()
   in
   let rec generate_expression = function
-    | Var _name -> ()
-    | Assign (_name, _exp) -> ()
+    | Var _name -> print_asm "  mov -4(%rbp), %rax"
+    | Assign (_name, exp) ->
+        generate_expression exp;
+        print_asm "  mov %rax, -4(%rbp)"
     | Const n -> print_asm (Printf.sprintf "  mov $%d, %%rax" n)
     | UnaryOp (Negate, exp) ->
         generate_expression exp;
@@ -103,6 +105,8 @@ let transpile ast =
     | [] -> ()
     | Return exp :: rest ->
         generate_expression exp;
+        print_asm "  mov %rbp, %rsp";
+        print_asm "  pop %rbp";
         print_asm "  ret";
         generate_function_body rest;
         ()
@@ -113,12 +117,18 @@ let transpile ast =
         let () =
           match exp_option with
           | None -> ()
-          | Some exp -> generate_expression exp
+          | Some exp ->
+              (* Reserve a space of the local variable *)
+              print_asm "  sub $4, %rsp";
+              generate_expression exp;
+              print_asm "  mov %rax, -4(%rbp)"
         in
         generate_function_body rest
   and generate_function_def = function
     | Function (Id name, statements) ->
         print_asm (Printf.sprintf "%s:" name);
+        print_asm "  push %rbp";
+        print_asm "  mov %rsp, %rbp";
         generate_function_body statements
   in
   match ast with
