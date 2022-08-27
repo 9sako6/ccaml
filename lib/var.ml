@@ -3,6 +3,7 @@ module VarMap = Map.Make (String)
 type var_map = (int * int) VarMap.t
 
 let empty = VarMap.empty
+let mem name = VarMap.mem name
 
 let add name size map =
   let max_offset (map : var_map) =

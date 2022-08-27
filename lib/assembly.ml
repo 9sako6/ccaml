@@ -117,6 +117,12 @@ let transpile ast =
         generate_expression var_map exp;
         generate_function_body var_map rest
     | Declare (name, exp_option) :: rest ->
+        (* Check redefinition *)
+        let _ =
+          if Var.mem name var_map then
+            failwith (Printf.sprintf "redefinition of '%s'." name)
+          else ()
+        in
         (* TODO: Fix for data size *)
         let size = 8 in
         let var_map = Var.add name size var_map in
