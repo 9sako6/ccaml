@@ -103,6 +103,9 @@ let parse_statements tokens =
         let expression, rest = parse_expression rest in
         let other_statements, rest = partition rest in
         (Ast.Declare (name, Some expression) :: other_statements, rest)
+    | IntKeyword :: Id name :: rest ->
+        let other_statements, rest = partition rest in
+        (Ast.Declare (name, None) :: other_statements, rest)
     | (Id _name as var) :: Equal :: rest ->
         let expression, rest = parse_expression (var :: Equal :: rest) in
         let other_statements, rest = partition rest in
@@ -112,7 +115,9 @@ let parse_statements tokens =
   let statements, rest = partition tokens in
   match rest with
   | CloseBrace :: [] -> statements
-  | _ -> failwith "Parse error. `}` is missing."
+  | _ ->
+      print_endline (Lexer.inspect rest);
+      failwith "Parse error. `}` is missing."
 
 let parse_function_def tokens =
   let open Token in

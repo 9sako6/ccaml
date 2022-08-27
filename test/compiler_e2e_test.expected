@@ -73,6 +73,20 @@ main:
   pop %rbp
   ret
 
+-- assign3.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $3, %rax
+  mov %rax, -8(%rbp)
+  mov %rax, -16(%rbp)
+  mov -16(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- associativity.c --
 .globl  main
 main:
@@ -453,6 +467,8 @@ main:
 4
 -- assign2.c --
 5
+-- assign3.c --
+3
 -- associativity.c --
 9
 -- associativity2.c --
