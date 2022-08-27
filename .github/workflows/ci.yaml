@@ -1,0 +1,19 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ocaml/setup-ocaml@v2
+        with:
+          ocaml-compiler: 4.14
+          dune-cache: true
+      - run: opam install dune alcotest
+      - run: opam exec -- dune build
+      - run: opam exec -- dune runtest
