@@ -37,13 +37,23 @@ let transpile ast =
     | _ -> ()
   in
   let rec generate_expression var_map = function
-    | Var name ->
-        let offset = Var.find_offset name var_map in
-        print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" offset)
-    | Assign (name, exp) ->
-        let offset = Var.find_offset name var_map in
-        generate_expression var_map exp;
-        print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset)
+    | Var name -> (
+        try
+          let offset = Var.find_offset name var_map in
+          print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" offset)
+        with Not_found ->
+          failwith
+            (Printf.sprintf "'%s' undeclared (first use in this function)." name)
+        )
+    | Assign (name, exp) -> (
+        try
+          let offset = Var.find_offset name var_map in
+          generate_expression var_map exp;
+          print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset)
+        with Not_found ->
+          failwith
+            (Printf.sprintf "'%s' undeclared (first use in this function)." name)
+        )
     | Const n -> print_asm (Printf.sprintf "  mov $%d, %%rax" n)
     | UnaryOp (Negate, exp) ->
         generate_expression var_map exp;

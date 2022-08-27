@@ -37,5 +37,13 @@ let () =
             (test_transpile_error
                (Util.read "../../../examples/invalid/redefvar.c")
                (Failure "redefinition of 'a'."));
+          Alcotest.test_case "undeclared" `Quick
+            (test_transpile_error
+               (Util.read "../../../examples/invalid/undeclared.c")
+               (Failure "'a' undeclared (first use in this function)."));
+          Alcotest.test_case "assign an undeclared variable" `Quick
+            (test_transpile_error
+               (Util.read "../../../examples/invalid/undeclared2.c")
+               (Failure "'a' undeclared (first use in this function)."));
         ] );
     ]
