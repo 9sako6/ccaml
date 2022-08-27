@@ -4,7 +4,12 @@ let delimiter = "--"
 
 (* Tests are executed in ./_build/default/test *)
 let c_path file_name = Unix.realpath "../../../examples/valid" ^ "/" ^ file_name
-let valid_c_files = Sys.readdir "../../../examples/valid" |> Array.to_list
+
+let valid_c_files =
+  Sys.readdir "../../../examples/valid"
+  |> Array.to_list
+  |> List.sort (fun file1 file2 ->
+         if file1 == file2 then 0 else if file1 < file2 then -1 else 1)
 
 (* Check generated assembly. *)
 let _ =
