@@ -7,6 +7,7 @@ let token_length =
   | CloseBrace
   | OpenParen
   | CloseParen
+  | Colon
   | Semicolon
   | Equal
   | Minus
@@ -16,10 +17,13 @@ let token_length =
   | Tilde
   | LessThan
   | GreaterThan
-  | Exclamation -> 1
+  | Exclamation
+  | Question -> 1
   | And | Or | EqualEqual | GreaterThanOrEqual | LessThanOrEqual | NotEqual -> 2
   | ReturnKeyword -> 6
   | IntKeyword -> 3
+  | IfKeyword -> 2
+  | ElseKeyword -> 4
   | Int i -> String.length (string_of_int i)
   | Id str -> String.length str
 
@@ -34,6 +38,8 @@ let get_int_or_id_token input =
     match matched_string with
     | "return" -> ReturnKeyword
     | "int" -> IntKeyword
+    | "if" -> IfKeyword
+    | "else" -> ElseKeyword
     | _ -> Id matched_string
   else
     raise

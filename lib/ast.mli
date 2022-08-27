@@ -27,12 +27,22 @@ type exp =
 type statement =
   | Return of exp
   | Exp of exp
-  | Declare of
-      string
-      * exp option (* string is variable name, exp is optional initializer *)
+  (* exp is controlling condition.
+     The first statement is 'if' branch.
+     The second statement is 'else' branch. *)
+  | If of exp * statement * statement option
+
+(* declaration is not a statement. *)
+type declaration =
+  (* string is variable name, exp is optional initializer *)
+  | Declare of string * exp option
+
+type block_item =
+  | Statement of statement
+  | Declaration of declaration
 
 type id = Id of string
-type function_def = Function of (id * statement list)
+type function_def = Function of (id * block_item list)
 type program = Program of function_def
 
 val inspect : program -> string

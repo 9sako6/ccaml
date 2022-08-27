@@ -114,48 +114,88 @@ let transpile ast =
         print_asm "  popq %rax";
         generate_binary_operation op
   in
-  let rec generate_function_body var_map = function
+  let rec generate_block_items var_map = function
     | [] -> ()
-    | Return exp :: rest ->
-        generate_expression var_map exp;
-        print_asm "  mov %rbp, %rsp";
-        print_asm "  pop %rbp";
-        print_asm "  ret";
-        generate_function_body var_map rest;
-        ()
-    | Exp exp :: rest ->
-        generate_expression var_map exp;
-        generate_function_body var_map rest
-    | Declare (name, exp_option) :: rest ->
-        (* Check redefinition *)
-        let _ =
-          if Var.mem name var_map then
-            failwith (Printf.sprintf "redefinition of '%s'." name)
-          else ()
-        in
-        (* TODO: Fix for data size *)
-        let size = 8 in
-        let var_map = Var.add name size var_map in
-        let () =
-          match exp_option with
-          | None -> ()
-          | Some exp -> (
-              match Var.find name var_map with
-              | offset, size ->
-                  (* Reserve a space of the local variable *)
-                  print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
-                  generate_expression var_map exp;
-                  print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset))
-        in
-        generate_function_body var_map rest
+    | Statement statement :: rest -> (
+        match statement with
+        | Return exp ->
+            generate_expression var_map exp;
+            print_asm "  mov %rbp, %rsp";
+            print_asm "  pop %rbp";
+            print_asm "  ret";
+            generate_block_items var_map rest;
+            ()
+        | Exp exp ->
+            generate_expression var_map exp;
+            generate_block_items var_map rest
+        | _ -> ())
+    | Declaration declaration :: rest -> (
+        match declaration with
+        | Declare (name, exp_option) ->
+            (* Check redefinition *)
+            let _ =
+              if Var.mem name var_map then
+                failwith (Printf.sprintf "redefinition of '%s'." name)
+              else ()
+            in
+            (* TODO: Fix for data size *)
+            let size = 8 in
+            let var_map = Var.add name size var_map in
+            let () =
+              match exp_option with
+              | None -> ()
+              | Some exp -> (
+                  match Var.find name var_map with
+                  | offset, size ->
+                      (* Reserve a space of the local variable *)
+                      print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
+                      generate_expression var_map exp;
+                      print_asm
+                        (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset))
+            in
+            generate_block_items var_map rest)
+    (* let rec generate_block_items var_map = function
+       | [] -> ()
+       | Return exp :: rest ->
+           generate_expression var_map exp;
+           print_asm "  mov %rbp, %rsp";
+           print_asm "  pop %rbp";
+           print_asm "  ret";
+           generate_block_items var_map rest;
+           ()
+       | Exp exp :: rest ->
+           generate_expression var_map exp;
+           generate_block_items var_map rest
+       | Declare (name, exp_option) :: rest ->
+           (* Check redefinition *)
+           let _ =
+             if Var.mem name var_map then
+               failwith (Printf.sprintf "redefinition of '%s'." name)
+             else ()
+           in
+           (* TODO: Fix for data size *)
+           let size = 8 in
+           let var_map = Var.add name size var_map in
+           let () =
+             match exp_option with
+             | None -> ()
+             | Some exp -> (
+                 match Var.find name var_map with
+                 | offset, size ->
+                     (* Reserve a space of the local variable *)
+                     print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
+                     generate_expression var_map exp;
+                     print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset))
+           in
+           generate_block_items var_map rest *)
   in
   let generate_function_def = function
-    | Function (Id name, statements) ->
+    | Function (Id name, block_items) ->
         print_asm (Printf.sprintf "%s:" name);
         print_asm "  push %rbp";
         print_asm "  movq %rsp, %rbp";
         let var_map = Var.empty in
-        generate_function_body var_map statements
+        generate_block_items var_map block_items
   in
   match ast with
   | Program fun_ast ->

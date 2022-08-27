@@ -1,8 +1,10 @@
 <program> ::= <function>
-<function> ::= "int" <id> "(" ")" "{" { <statement> } "}"
+<function> ::= "int" <id> "(" ")" "{" { <block-item> } "}"
+<block-item> ::= <statement> | <declaration>
 <statement> ::= "return" <exp> ";"
   | <exp> ";"
-  | "int" <id> [ = <exp>] ";"
+  | "if" "(" <exp> ")" <statement> [ "else" <statement> ]
+<declaration> := "int" <id> [ = <exp>] ";"
 <exp> ::= <or-exp> | <id> "=" <exp>
 <or-exp> ::= <and-exp> { "||" <and-exp> }
 <and-exp> ::= <equality-exp> { "&&" <equality-exp> }

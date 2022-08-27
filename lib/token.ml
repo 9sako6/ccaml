@@ -7,6 +7,8 @@ type token =
   | OpenParen
   (* ) *)
   | CloseParen
+  (* : *)
+  | Colon
   (* ; *)
   | Semicolon
   (* + *)
@@ -21,6 +23,8 @@ type token =
   | Tilde
   (* ! *)
   | Exclamation
+  (* ? *)
+  | Question
   (* && *)
   | And
   (* || *)
@@ -43,6 +47,8 @@ type token =
   | IntKeyword
   (* return *)
   | ReturnKeyword
+  | IfKeyword
+  | ElseKeyword
   (* integer literal *)
   | Int of int
   (* identifier *)
@@ -53,6 +59,7 @@ let to_string = function
   | CloseBrace -> "}"
   | OpenParen -> "("
   | CloseParen -> ")"
+  | Colon -> ":"
   | Semicolon -> ";"
   | Minus -> "-"
   | Plus -> "+"
@@ -60,6 +67,7 @@ let to_string = function
   | Slash -> "/"
   | Tilde -> "~"
   | Exclamation -> "!"
+  | Question -> "?"
   | And -> "&&"
   | Or -> "||"
   | Equal -> "="
@@ -71,5 +79,7 @@ let to_string = function
   | GreaterThanOrEqual -> ">="
   | ReturnKeyword -> "RETURN"
   | IntKeyword -> "INT"
+  | IfKeyword -> "IF"
+  | ElseKeyword -> "ELSE"
   | Int i -> Printf.sprintf "INT<%d>" i
   | Id str -> Printf.sprintf "ID<%s>" str

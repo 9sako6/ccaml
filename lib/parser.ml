@@ -87,7 +87,7 @@ let rec parse_expression tokens =
 
   parse_exp tokens
 
-let parse_statements tokens =
+let parse_block_items tokens =
   let open Token in
   (* Split the statements and the rest *)
   let rec partition sub_tokens =
@@ -97,19 +97,21 @@ let parse_statements tokens =
         failwith "Parse error. `return` returns empty."
     | ReturnKeyword :: rest ->
         let expression, rest = parse_expression rest in
-        let other_statements, rest = partition rest in
-        (Ast.Return expression :: other_statements, rest)
-    | IntKeyword :: Id name :: Equal :: rest ->
-        let expression, rest = parse_expression rest in
-        let other_statements, rest = partition rest in
-        (Ast.Declare (name, Some expression) :: other_statements, rest)
-    | IntKeyword :: Id name :: rest ->
-        let other_statements, rest = partition rest in
-        (Ast.Declare (name, None) :: other_statements, rest)
+        let other_block_items, rest = partition rest in
+        (Ast.Statement (Ast.Return expression) :: other_block_items, rest)
     | (Id _name as var) :: Equal :: rest ->
         let expression, rest = parse_expression (var :: Equal :: rest) in
-        let other_statements, rest = partition rest in
-        (Ast.Exp expression :: other_statements, rest)
+        let other_block_items, rest = partition rest in
+        (Ast.Statement (Ast.Exp expression) :: other_block_items, rest)
+    | IntKeyword :: Id name :: Equal :: rest ->
+        let expression, rest = parse_expression rest in
+        let other_block_items, rest = partition rest in
+        ( Ast.Declaration (Ast.Declare (name, Some expression))
+          :: other_block_items,
+          rest )
+    | IntKeyword :: Id name :: rest ->
+        let other_block_items, rest = partition rest in
+        (Ast.Declaration (Ast.Declare (name, None)) :: other_block_items, rest)
     | _ -> ([], sub_tokens)
   in
   let statements, rest = partition tokens in
@@ -123,7 +125,7 @@ let parse_function_def tokens =
   let open Token in
   match tokens with
   | IntKeyword :: Id name :: OpenParen :: CloseParen :: OpenBrace :: rest ->
-      Ast.Function (Ast.Id name, parse_statements rest)
+      Ast.Function (Ast.Id name, parse_block_items rest)
   | _ -> failwith "Parse error in a function." (* TODO: Kind error message *)
 
 let parse tokens = Ast.Program (parse_function_def tokens)
