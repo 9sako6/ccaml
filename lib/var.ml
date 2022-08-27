@@ -4,16 +4,16 @@ type var_map = (int * int) VarMap.t
 
 let empty = VarMap.empty
 
-let max_offset (map : var_map) =
-  let keys_and_values = VarMap.bindings map in
-  let rec max current_max = function
-    | [] -> current_max
-    | (_key, (offset, _size)) :: rest ->
-        if offset > current_max then max offset rest else max current_max rest
-  in
-  max 0 keys_and_values
-
 let add name size map =
+  let max_offset (map : var_map) =
+    let keys_and_values = VarMap.bindings map in
+    let rec max current_max = function
+      | [] -> current_max
+      | (_key, (offset, _size)) :: rest ->
+          if offset > current_max then max offset rest else max current_max rest
+    in
+    max 0 keys_and_values
+  in
   let offset = max_offset map in
   VarMap.add name (offset + size, size) map
 

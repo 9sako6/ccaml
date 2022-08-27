@@ -132,7 +132,8 @@ let transpile ast =
                   print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset))
         in
         generate_function_body var_map rest
-  and generate_function_def = function
+  in
+  let generate_function_def = function
     | Function (Id name, statements) ->
         print_asm (Printf.sprintf "%s:" name);
         print_asm "  push %rbp";
