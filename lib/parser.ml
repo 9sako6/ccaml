@@ -87,32 +87,54 @@ let rec parse_expression tokens =
 
   parse_exp tokens
 
-let parse_block_items tokens =
+let parse_statement tokens =
   let open Token in
   (* Split the statements and the rest *)
-  let rec partition sub_tokens =
-    match sub_tokens with
+  let rec partition tokens =
+    match tokens with
     | Semicolon :: rest -> partition rest
     | ReturnKeyword :: Semicolon :: _ ->
         failwith "Parse error. `return` returns empty."
     | ReturnKeyword :: rest ->
         let expression, rest = parse_expression rest in
-        let other_block_items, rest = partition rest in
-        (Ast.Statement (Ast.Return expression) :: other_block_items, rest)
+        (Ast.Return expression, rest)
     | (Id _name as var) :: Equal :: rest ->
         let expression, rest = parse_expression (var :: Equal :: rest) in
+        (Ast.Exp expression, rest)
+    | IfKeyword :: rest -> (
+        let expression, rest = parse_expression rest in
+        let statement, rest = partition rest in
+        match rest with
+        | Semicolon :: ElseKeyword :: rest ->
+            let statement_for_else, rest = partition rest in
+            (Ast.If (expression, statement, Some statement_for_else), rest)
+        | _ -> (Ast.If (expression, statement, None), rest))
+    | _ -> failwith "Unknown token to parse a statement."
+  in
+  let statement, rest = partition tokens in
+  match rest with
+  | Semicolon :: rest -> (statement, rest)
+  | _ -> failwith "Parse error. `;` is expected."
+
+let parse_block_items tokens =
+  let open Token in
+  (* Split the statements and the rest *)
+  let rec partition tokens =
+    match tokens with
+    | Semicolon :: _ | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ ->
+        let statement, rest = parse_statement tokens in
         let other_block_items, rest = partition rest in
-        (Ast.Statement (Ast.Exp expression) :: other_block_items, rest)
+        (Ast.Statement statement :: other_block_items, rest)
     | IntKeyword :: Id name :: Equal :: rest ->
         let expression, rest = parse_expression rest in
         let other_block_items, rest = partition rest in
-        ( Ast.Declaration (Ast.Declare (name, Some expression))
-          :: other_block_items,
-          rest )
+        let declaration = Ast.Declare (name, Some expression) in
+        (Ast.Declaration declaration :: other_block_items, rest)
     | IntKeyword :: Id name :: rest ->
         let other_block_items, rest = partition rest in
-        (Ast.Declaration (Ast.Declare (name, None)) :: other_block_items, rest)
-    | _ -> ([], sub_tokens)
+        let declaration = Ast.Declare (name, None) in
+        (Ast.Declaration declaration :: other_block_items, rest)
+    | _ -> ([], tokens)
   in
   let statements, rest = partition tokens in
   match rest with
