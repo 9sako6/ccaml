@@ -126,21 +126,39 @@ let transpile ast =
         generate_expression var_map exp_else;
         print_asm (Printf.sprintf "%s:" goal_label)
   in
+  let rec generate_statement var_map statement =
+    match statement with
+    | Return exp ->
+        generate_expression var_map exp;
+        print_asm "  mov %rbp, %rsp";
+        print_asm "  pop %rbp";
+        print_asm "  ret"
+    | Exp exp -> generate_expression var_map exp
+    | If (exp, if_statement, statement_option) -> (
+        let clause_id = Util.unique_id () in
+        let else_label = Printf.sprintf "else_%d" clause_id in
+        let goal_label = Printf.sprintf "after_else_%d" clause_id in
+        generate_expression var_map exp;
+        print_asm "  cmp $0, %rax";
+        match statement_option with
+        | Some else_statement ->
+            print_asm (Printf.sprintf "  je %s" else_label);
+            generate_statement var_map if_statement;
+            print_asm (Printf.sprintf "  jmp %s" goal_label);
+            print_asm (Printf.sprintf "%s:" else_label);
+            generate_statement var_map else_statement;
+            print_asm (Printf.sprintf "%s:" goal_label)
+        | None ->
+            print_asm (Printf.sprintf "  je %s" goal_label);
+            generate_statement var_map if_statement;
+            print_asm (Printf.sprintf "  jmp %s" goal_label);
+            print_asm (Printf.sprintf "%s:" goal_label))
+  in
   let rec generate_block_items var_map = function
     | [] -> ()
-    | Statement statement :: rest -> (
-        match statement with
-        | Return exp ->
-            generate_expression var_map exp;
-            print_asm "  mov %rbp, %rsp";
-            print_asm "  pop %rbp";
-            print_asm "  ret";
-            generate_block_items var_map rest;
-            ()
-        | Exp exp ->
-            generate_expression var_map exp;
-            generate_block_items var_map rest
-        | _ -> ())
+    | Statement statement :: rest ->
+        generate_statement var_map statement;
+        generate_block_items var_map rest
     | Declaration declaration :: rest -> (
         match declaration with
         | Declare (name, exp_option) ->
