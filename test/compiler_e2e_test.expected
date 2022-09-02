@@ -479,11 +479,19 @@ main:
 2
 -- div.c --
 2
+-- else.c --
+3
 -- eq.c --
 0
 -- greater.c --
 1
 -- greater_or_equal.c --
+1
+-- if.c --
+2
+-- if_else.c --
+2
+-- if_nested.c --
 1
 -- less.c --
 0
