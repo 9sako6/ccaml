@@ -87,6 +87,28 @@ main:
   pop %rbp
   ret
 
+-- assign_ternary.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $0, %rax
+  mov %rax, -8(%rbp)
+  mov $1, %rax
+  cmp $0, %rax
+  je ternary_else_1
+  mov $2, %rax
+  jmp ternary_after_else_1
+ternary_else_1:
+  mov $3, %rax
+ternary_after_else_1:
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- associativity.c --
 .globl  main
 main:
@@ -163,15 +185,15 @@ main:
   sete %al
   movzb %al, %rax
   cmp $0, %rax
-  je right_of_or_clause_1
+  je right_of_or_clause_2
   mov $1, %rax
-  jmp goal_of_or_clause_1
-right_of_or_clause_1:
+  jmp goal_of_or_clause_2
+right_of_or_clause_2:
   mov $1, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_1:
+goal_of_or_clause_2:
   mov %rbp, %rsp
   pop %rbp
   ret
@@ -210,6 +232,26 @@ main:
   mov %rbp, %rsp
   pop %rbp
   ret
+
+-- else.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $0, %rax
+  cmp $0, %rax
+  je else_3
+  mov $2, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  jmp after_else_3
+else_3:
+  mov $3, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+after_else_3:
 
 -- eq.c --
 .globl  main
@@ -258,6 +300,72 @@ main:
   cmp %rcx, %rax
   setge %al
   movzb %al, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- if.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $1, %rax
+  cmp $0, %rax
+  je after_else_4
+  mov $2, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  jmp after_else_4
+after_else_4:
+
+-- if_else.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $1, %rax
+  cmp $0, %rax
+  je else_5
+  mov $2, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  jmp after_else_5
+else_5:
+  mov $1, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+after_else_5:
+
+-- if_nested.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $1, %rax
+  mov %rax, -8(%rbp)
+  sub $8, %rsp
+  mov $0, %rax
+  mov %rax, -16(%rbp)
+  mov -8(%rbp), %rax
+  cmp $0, %rax
+  je else_6
+  mov $1, %rax
+  mov %rax, -16(%rbp)
+  jmp after_else_6
+else_6:
+  mov -16(%rbp), %rax
+  cmp $0, %rax
+  je after_else_7
+  mov $2, %rax
+  mov %rax, -16(%rbp)
+  jmp after_else_7
+after_else_7:
+after_else_6:
+  mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
@@ -340,15 +448,15 @@ main:
   movq %rsp, %rbp
   mov $2, %rax
   cmp $0, %rax
-  je right_of_or_clause_2
+  je right_of_or_clause_8
   mov $1, %rax
-  jmp goal_of_or_clause_2
-right_of_or_clause_2:
+  jmp goal_of_or_clause_8
+right_of_or_clause_8:
   mov $0, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_2:
+goal_of_or_clause_8:
   mov %rbp, %rsp
   pop %rbp
   ret
@@ -360,25 +468,25 @@ main:
   movq %rsp, %rbp
   mov $0, %rax
   cmp $0, %rax
-  je right_of_or_clause_4
+  je right_of_or_clause_10
   mov $1, %rax
-  jmp goal_of_or_clause_4
-right_of_or_clause_4:
+  jmp goal_of_or_clause_10
+right_of_or_clause_10:
   mov $0, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_4:
+goal_of_or_clause_10:
   cmp $0, %rax
-  je right_of_or_clause_3
+  je right_of_or_clause_9
   mov $1, %rax
-  jmp goal_of_or_clause_3
-right_of_or_clause_3:
+  jmp goal_of_or_clause_9
+right_of_or_clause_9:
   mov $1, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_3:
+goal_of_or_clause_9:
   mov %rbp, %rsp
   pop %rbp
   ret
