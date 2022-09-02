@@ -147,6 +147,7 @@ let parse_block_items tokens =
         let other_block_items, rest = partition rest in
         let declaration = Ast.Declare (name, None) in
         (Ast.Declaration declaration :: other_block_items, rest)
+    | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
     | _ -> ([], tokens)
   in
   let statements, rest = partition tokens in
