@@ -121,7 +121,9 @@ let parse_block_items tokens =
   (* Split the statements and the rest *)
   let rec partition tokens =
     match tokens with
-    | Semicolon :: _ | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ ->
+    | Semicolon :: rest -> partition rest
+    | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ ->
+        (* | Semicolon :: _ | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ -> *)
         let statement, rest = parse_statement tokens in
         let other_block_items, rest = partition rest in
         (Ast.Statement statement :: other_block_items, rest)
