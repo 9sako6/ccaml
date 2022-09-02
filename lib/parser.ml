@@ -78,11 +78,22 @@ let rec parse_expression tokens =
 
   let parse_or_exp = parse_binary_op_exp parse_and_exp [ Or ] in
 
-  let rec parse_exp = function
+  let rec parse_ternary_exp tokens =
+    let exp, rest = parse_or_exp tokens in
+    match rest with
+    | Token.Question :: rest -> (
+        let exp2, rest = parse_exp rest in
+        match rest with
+        | Token.Colon :: rest ->
+            let exp3, rest = parse_ternary_exp rest in
+            (Ast.Condition (exp, exp2, exp3), rest)
+        | _ -> failwith "`:` is expected as a ternary operator.")
+    | _ -> (exp, rest)
+  and parse_exp = function
     | Id name :: Equal :: rest ->
         let exp, sub_rest = parse_exp rest in
         (Ast.Assign (name, exp), sub_rest)
-    | tokens -> parse_or_exp tokens
+    | tokens -> parse_ternary_exp tokens
   in
 
   parse_exp tokens

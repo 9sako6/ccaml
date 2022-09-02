@@ -23,6 +23,7 @@ type exp =
   | Const of int
   | UnaryOp of unary_op * exp
   | BinaryOp of binary_op * exp * exp
+  | Condition of exp * exp * exp
 
 type statement =
   | Return of exp
@@ -81,6 +82,13 @@ let rec inspect_exp indent =
       Printf.sprintf "%s↳ %s\n%s%s" indent operator
         (inspect_exp next_indent left_exp)
         (inspect_exp next_indent right_exp)
+  | Condition (condition_exp, if_exp, else_exp) ->
+      Printf.sprintf "%s%s?\n%s%s:\n%s"
+        (inspect_exp next_indent condition_exp)
+        next_indent
+        (inspect_exp next_indent if_exp)
+        next_indent
+        (inspect_exp next_indent else_exp)
 
 let rec inspect_statement indent = function
   | Return exp ->

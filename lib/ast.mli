@@ -23,6 +23,7 @@ type exp =
   | Const of int
   | UnaryOp of unary_op * exp
   | BinaryOp of binary_op * exp * exp
+  | Condition of exp * exp * exp
 
 type statement =
   | Return of exp

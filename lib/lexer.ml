@@ -61,6 +61,8 @@ let tokenize input =
     | "*" :: rest -> Asterisk :: tokens (Util.join rest)
     | "/" :: rest -> Slash :: tokens (Util.join rest)
     | "~" :: rest -> Tilde :: tokens (Util.join rest)
+    | "?" :: rest -> Question :: tokens (Util.join rest)
+    | ":" :: rest -> Colon :: tokens (Util.join rest)
     | "!" :: "=" :: rest -> NotEqual :: tokens (Util.join rest)
     | "!" :: rest -> Exclamation :: tokens (Util.join rest)
     | "&" :: "&" :: rest -> And :: tokens (Util.join rest)

@@ -5,7 +5,8 @@
   | <exp> ";"
   | "if" "(" <exp> ")" <statement> [ "else" <statement> ]
 <declaration> := "int" <id> [ = <exp>] ";"
-<exp> ::= <or-exp> | <id> "=" <exp>
+<exp> ::= <id> "=" <exp> | <conditional-exp>
+<conditional-exp> ::= <or-exp> [ "?" <exp> ":" <conditional-exp> ]
 <or-exp> ::= <and-exp> { "||" <and-exp> }
 <and-exp> ::= <equality-exp> { "&&" <equality-exp> }
 <equality-exp> ::= <comparison-exp> { ("==" | "!=" ) <comparison-exp> }

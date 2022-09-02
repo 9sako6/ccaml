@@ -113,6 +113,18 @@ let transpile ast =
         (* Get the result of left expression. *)
         print_asm "  popq %rax";
         generate_binary_operation op
+    | Condition (exp, exp_if, exp_else) ->
+        let clause_id = Util.unique_id () in
+        let else_label = Printf.sprintf "ternary_else_%d" clause_id in
+        let goal_label = Printf.sprintf "ternary_after_else_%d" clause_id in
+        generate_expression var_map exp;
+        print_asm "  cmp $0, %rax";
+        print_asm (Printf.sprintf "  je %s" else_label);
+        generate_expression var_map exp_if;
+        print_asm (Printf.sprintf "  jmp %s" goal_label);
+        print_asm (Printf.sprintf "%s:" else_label);
+        generate_expression var_map exp_else;
+        print_asm (Printf.sprintf "%s:" goal_label)
   in
   let rec generate_block_items var_map = function
     | [] -> ()
