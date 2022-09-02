@@ -54,6 +54,7 @@ let rec parse_expression tokens =
     (* <int> *)
     | Int n :: rest -> (Ast.Const n, rest)
     | Id name :: rest -> (Ast.Var name, rest)
+    | IfKeyword :: _ -> failwith "expected expression before 'if'."
     | _ -> failwith "Parse error. This is an invalid factor."
   in
 
@@ -120,6 +121,7 @@ let parse_statement tokens =
             let statement_for_else, rest = partition rest in
             (Ast.If (expression, statement, Some statement_for_else), rest)
         | _ -> (Ast.If (expression, statement, None), rest))
+    | IntKeyword :: _ -> failwith "expected expression before 'int'."
     | _ -> failwith "Unknown token to parse a statement."
   in
   let statement, rest = partition tokens in
