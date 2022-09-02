@@ -23,16 +23,27 @@ type exp =
   | Const of int
   | UnaryOp of unary_op * exp
   | BinaryOp of binary_op * exp * exp
+  | Condition of exp * exp * exp
 
 type statement =
   | Return of exp
   | Exp of exp
-  | Declare of
-      string
-      * exp option (* string is variable name, exp is optional initializer *)
+  (* exp is controlling condition.
+     The first statement is 'if' branch.
+     The second statement is 'else' branch. *)
+  | If of exp * statement * statement option
+
+(* declaration is not a statement. *)
+type declaration =
+  (* string is variable name, exp is optional initializer *)
+  | Declare of string * exp option
+
+type block_item =
+  | Statement of statement
+  | Declaration of declaration
 
 type id = Id of string
-type function_def = Function of (id * statement list)
+type function_def = Function of (id * block_item list)
 type program = Program of function_def
 
 let rec inspect_exp indent =
@@ -71,12 +82,33 @@ let rec inspect_exp indent =
       Printf.sprintf "%s↳ %s\n%s%s" indent operator
         (inspect_exp next_indent left_exp)
         (inspect_exp next_indent right_exp)
+  | Condition (condition_exp, if_exp, else_exp) ->
+      Printf.sprintf "%s%s?\n%s%s:\n%s"
+        (inspect_exp next_indent condition_exp)
+        next_indent
+        (inspect_exp next_indent if_exp)
+        next_indent
+        (inspect_exp next_indent else_exp)
 
-let inspect_statement indent = function
+let rec inspect_statement indent = function
   | Return exp ->
       Printf.sprintf "%s↳ Return\n%s" indent (inspect_exp (indent ^ " ") exp)
   | Exp exp ->
       Printf.sprintf "%s↳ Exp\n%s" indent (inspect_exp (indent ^ " ") exp)
+  | If (exp, statement_for_if, statement_for_else_option) -> (
+      let exp_string = inspect_exp indent exp in
+      let if_string =
+        Printf.sprintf "%s↳ If\n%s%s" indent exp_string
+          (inspect_statement (indent ^ " ") statement_for_if)
+      in
+      match statement_for_else_option with
+      | None -> if_string
+      | Some statement ->
+          if_string
+          ^ Printf.sprintf "%s↳ Else\n%s" indent
+              (inspect_statement (indent ^ " ") statement))
+
+let inspect_declaration indent = function
   | Declare (name, exp_option) -> (
       match exp_option with
       | Some exp ->
@@ -84,14 +116,20 @@ let inspect_statement indent = function
           Printf.sprintf "%s↳ Declare(name: %s)\n%s" indent name exp_string
       | None -> Printf.sprintf "%s↳ Declare(name: %s)\n" indent name)
 
+let inspect_block_item indent = function
+  | Statement statement -> inspect_statement indent statement
+  | Declaration declaration -> inspect_declaration indent declaration
+
 let inspect_function_def indent = function
-  | Function (Id name, statements) ->
-      let statements_string =
-        Util.join (List.map (inspect_statement (indent ^ " ")) statements)
+  | Function (Id name, block_items) ->
+      let block_items_string =
+        Util.join (List.map (inspect_block_item (indent ^ " ")) block_items)
       in
-      Printf.sprintf "%s↳ Function(name: %s)\n%s" indent name statements_string
+      Printf.sprintf "%s↳ Function(name: %s)\n%s" indent name block_items_string
 
 let inspect program_node =
   match program_node with
   | Program function_def_node ->
-      Printf.sprintf "Program\n%s" (inspect_function_def " " function_def_node)
+      let indent = " " in
+      Printf.sprintf "Program\n%s"
+        (inspect_function_def indent function_def_node)

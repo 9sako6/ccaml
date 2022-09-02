@@ -13,11 +13,27 @@ let test_parse_error invalid_program expected_error () =
 let () =
   Alcotest.run "Parser"
     [
-      ( "exception",
+      ( "parse error",
         [
           Alcotest.test_case "empty return program" `Quick
             (test_parse_error
                (Util.read "../../../examples/invalid/empty_return.c")
                (Failure "Parse error. `return` returns empty."));
+          Alcotest.test_case "else without if" `Quick
+            (test_parse_error
+               (Util.read "../../../examples/invalid/else.c")
+               (Failure "'else' without a previous 'if'."));
+          Alcotest.test_case "using if as an expression" `Quick
+            (test_parse_error
+               (Util.read "../../../examples/invalid/if_assign.c")
+               (Failure "expected expression before 'if'."));
+          Alcotest.test_case "declaration in 'if'" `Quick
+            (test_parse_error
+               (Util.read "../../../examples/invalid/if_declaration.c")
+               (Failure "expected expression before 'int'."));
+          Alcotest.test_case "using 'else' twice" `Quick
+            (test_parse_error
+               (Util.read "../../../examples/invalid/if_else_else.c")
+               (Failure "'else' without a previous 'if'."));
         ] );
     ]
