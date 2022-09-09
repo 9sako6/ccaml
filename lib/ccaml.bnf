@@ -4,6 +4,7 @@
 <statement> ::= "return" <exp> ";"
   | <exp> ";"
   | "if" "(" <exp> ")" <statement> [ "else" <statement> ]
+  | "{" { <block-item> } "}"
 <declaration> := "int" <id> [ = <exp>] ";"
 <exp> ::= <id> "=" <exp> | <conditional-exp>
 <conditional-exp> ::= <or-exp> [ "?" <exp> ":" <conditional-exp> ]

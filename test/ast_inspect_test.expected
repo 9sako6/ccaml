@@ -3,12 +3,14 @@ int main() {
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ Const(value: 29)
+  ↳ Block
+   ↳ Return
+    ↳ Const(value: 29)
 ==========
 int main() {}
 Program
  ↳ Function(name: main)
+  ↳ Block
 ==========
 int main() {
     return 2;
@@ -16,119 +18,130 @@ int main() {
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ Const(value: 2)
-  ↳ Return
-   ↳ Const(value: 100)
+  ↳ Block
+   ↳ Return
+    ↳ Const(value: 2)
+   ↳ Return
+    ↳ Const(value: 100)
 ==========
 int main() {
     return -42;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ -
-    ↳ Const(value: 42)
+  ↳ Block
+   ↳ Return
+    ↳ -
+     ↳ Const(value: 42)
 ==========
 int main() {
     return ~42;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ ~
-    ↳ Const(value: 42)
+  ↳ Block
+   ↳ Return
+    ↳ ~
+     ↳ Const(value: 42)
 ==========
 int main() {
     return !42;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ !
-    ↳ Const(value: 42)
+  ↳ Block
+   ↳ Return
+    ↳ !
+     ↳ Const(value: 42)
 ==========
 int main() {
     return !~-~-!42;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ !
-    ↳ ~
-     ↳ -
-      ↳ ~
-       ↳ -
-        ↳ !
-         ↳ Const(value: 42)
+  ↳ Block
+   ↳ Return
+    ↳ !
+     ↳ ~
+      ↳ -
+       ↳ ~
+        ↳ -
+         ↳ !
+          ↳ Const(value: 42)
 ==========
 int main() {
     return 1 + 2;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ +
-    ↳ Const(value: 1)
-    ↳ Const(value: 2)
+  ↳ Block
+   ↳ Return
+    ↳ +
+     ↳ Const(value: 1)
+     ↳ Const(value: 2)
 ==========
 int main() {
     return (1 + 2) - (2 - 9);
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ -
-    ↳ +
-     ↳ Const(value: 1)
-     ↳ Const(value: 2)
+  ↳ Block
+   ↳ Return
     ↳ -
-     ↳ Const(value: 2)
-     ↳ Const(value: 9)
+     ↳ +
+      ↳ Const(value: 1)
+      ↳ Const(value: 2)
+     ↳ -
+      ↳ Const(value: 2)
+      ↳ Const(value: 9)
 ==========
 int main() {
     return 1 + 2 * 8;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ +
-    ↳ Const(value: 1)
-    ↳ *
-     ↳ Const(value: 2)
-     ↳ Const(value: 8)
+  ↳ Block
+   ↳ Return
+    ↳ +
+     ↳ Const(value: 1)
+     ↳ *
+      ↳ Const(value: 2)
+      ↳ Const(value: 8)
 ==========
 int main() {
     return 1 + 2 / 7;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ +
-    ↳ Const(value: 1)
-    ↳ /
-     ↳ Const(value: 2)
-     ↳ Const(value: 7)
+  ↳ Block
+   ↳ Return
+    ↳ +
+     ↳ Const(value: 1)
+     ↳ /
+      ↳ Const(value: 2)
+      ↳ Const(value: 7)
 ==========
 int main() {
     return (1 + 2) * 9;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ *
-    ↳ +
-     ↳ Const(value: 1)
-     ↳ Const(value: 2)
-    ↳ Const(value: 9)
+  ↳ Block
+   ↳ Return
+    ↳ *
+     ↳ +
+      ↳ Const(value: 1)
+      ↳ Const(value: 2)
+     ↳ Const(value: 9)
 ==========
 int main() {
     return 1 / 0;
 }
 Program
  ↳ Function(name: main)
-  ↳ Return
-   ↳ /
-    ↳ Const(value: 1)
-    ↳ Const(value: 0)
+  ↳ Block
+   ↳ Return
+    ↳ /
+     ↳ Const(value: 1)
+     ↳ Const(value: 0)
 ==========

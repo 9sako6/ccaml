@@ -25,22 +25,23 @@ type exp =
   | BinaryOp of binary_op * exp * exp
   | Condition of exp * exp * exp
 
-type statement =
+type block_item =
+  | Statement of statement
+  | Declaration of declaration
+
+and statement =
   | Return of exp
   | Exp of exp
   (* exp is controlling condition.
      The first statement is 'if' branch.
      The second statement is 'else' branch. *)
   | If of exp * statement * statement option
+  | Block of block_item list
 
 (* declaration is not a statement. *)
-type declaration =
+and declaration =
   (* string is variable name, exp is optional initializer *)
   | Declare of string * exp option
-
-type block_item =
-  | Statement of statement
-  | Declaration of declaration
 
 type id = Id of string
 type function_def = Function of (id * block_item list)

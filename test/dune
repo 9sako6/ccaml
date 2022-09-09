@@ -5,6 +5,7 @@
   parser_test
   ast_inspect_test
   assembly_test
-  compiler_e2e_test)
+  compiler_e2e_test
+  var_test)
  (modes native)
  (libraries ccaml alcotest))

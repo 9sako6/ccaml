@@ -33,36 +33,35 @@ let transpile ast =
         print_asm "  cmp %rcx, %rax";
         print_asm "  setge %al";
         print_asm "  movzb %al, %rax"
-    (* TODO: Fix *)
-    | _ -> ()
+    | _ -> failwith "Unknown binary operator."
   in
-  let rec generate_expression var_map = function
+  let rec generate_expression context = function
     | Var name -> (
         try
-          let offset = Var.find_offset name var_map in
-          print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" offset)
+          let var = Var.find name context in
+          print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" var.offset)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
         )
     | Assign (name, exp) -> (
         try
-          let offset = Var.find_offset name var_map in
-          generate_expression var_map exp;
-          print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset)
+          let var = Var.find name context in
+          generate_expression context exp;
+          print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" var.offset)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
         )
     | Const n -> print_asm (Printf.sprintf "  mov $%d, %%rax" n)
     | UnaryOp (Negate, exp) ->
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  neg %rax"
     | UnaryOp (Complement, exp) ->
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  not %rax"
     | UnaryOp (Not, exp) ->
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  cmp $0, %rax";
         (* AL is a special flag register that holds the comparison result.
            `sete` sets AL register to 1 if EAX was 0 in earlier comparison. *)
@@ -72,14 +71,14 @@ let transpile ast =
         let clause_id = Util.unique_id () in
         let right_label = Printf.sprintf "right_of_and_clause_%d" clause_id in
         let goal_label = Printf.sprintf "goal_of_and_clause_%d" clause_id in
-        generate_expression var_map left;
+        generate_expression context left;
         (* If left is not false, go to right's label. *)
         print_asm "  cmp $0, %rax";
         print_asm (Printf.sprintf "  jne %s" right_label);
         print_asm (Printf.sprintf "  jmp %s" goal_label);
         (* Emit label for right. *)
         print_asm (Printf.sprintf "%s:" right_label);
-        generate_expression var_map right;
+        generate_expression context right;
         print_asm "  cmp $0, %rax";
         print_asm "  setne %al";
         print_asm "  movzb %al, %rax";
@@ -89,7 +88,7 @@ let transpile ast =
         let clause_id = Util.unique_id () in
         let right_label = Printf.sprintf "right_of_or_clause_%d" clause_id in
         let goal_label = Printf.sprintf "goal_of_or_clause_%d" clause_id in
-        generate_expression var_map left;
+        generate_expression context left;
         (* If left is false, go to right's label. *)
         print_asm "  cmp $0, %rax";
         print_asm (Printf.sprintf "  je %s" right_label);
@@ -98,17 +97,17 @@ let transpile ast =
         print_asm (Printf.sprintf "  jmp %s" goal_label);
         (* Emit label for right. *)
         print_asm (Printf.sprintf "%s:" right_label);
-        generate_expression var_map right;
+        generate_expression context right;
         print_asm "  cmp $0, %rax";
         print_asm "  setne %al";
         print_asm "  movzb %al, %rax";
         (* Emit label for goal. *)
         print_asm (Printf.sprintf "%s:" goal_label)
     | BinaryOp (op, left, right) ->
-        generate_expression var_map left;
+        generate_expression context left;
         (* Save the result of left expression. *)
         print_asm "  pushq %rax";
-        generate_expression var_map right;
+        generate_expression context right;
         print_asm "  mov %rax, %rcx";
         (* Get the result of left expression. *)
         print_asm "  popq %rax";
@@ -117,81 +116,82 @@ let transpile ast =
         let clause_id = Util.unique_id () in
         let else_label = Printf.sprintf "ternary_else_%d" clause_id in
         let goal_label = Printf.sprintf "ternary_after_else_%d" clause_id in
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  cmp $0, %rax";
         print_asm (Printf.sprintf "  je %s" else_label);
-        generate_expression var_map exp_if;
+        generate_expression context exp_if;
         print_asm (Printf.sprintf "  jmp %s" goal_label);
         print_asm (Printf.sprintf "%s:" else_label);
-        generate_expression var_map exp_else;
+        generate_expression context exp_else;
         print_asm (Printf.sprintf "%s:" goal_label)
   in
-  let rec generate_statement var_map statement =
+  let rec generate_statement context statement =
     match statement with
     | Return exp ->
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  mov %rbp, %rsp";
         print_asm "  pop %rbp";
         print_asm "  ret"
-    | Exp exp -> generate_expression var_map exp
+    | Exp exp -> generate_expression context exp
     | If (exp, if_statement, statement_option) -> (
         let clause_id = Util.unique_id () in
         let else_label = Printf.sprintf "else_%d" clause_id in
         let goal_label = Printf.sprintf "after_else_%d" clause_id in
-        generate_expression var_map exp;
+        generate_expression context exp;
         print_asm "  cmp $0, %rax";
         match statement_option with
         | Some else_statement ->
             print_asm (Printf.sprintf "  je %s" else_label);
-            generate_statement var_map if_statement;
+            generate_statement context if_statement;
             print_asm (Printf.sprintf "  jmp %s" goal_label);
             print_asm (Printf.sprintf "%s:" else_label);
-            generate_statement var_map else_statement;
+            generate_statement context else_statement;
             print_asm (Printf.sprintf "%s:" goal_label)
         | None ->
             print_asm (Printf.sprintf "  je %s" goal_label);
-            generate_statement var_map if_statement;
+            generate_statement context if_statement;
             print_asm (Printf.sprintf "  jmp %s" goal_label);
             print_asm (Printf.sprintf "%s:" goal_label))
-  in
-  let rec generate_block_items var_map = function
+    | Block block_items ->
+        (* Add a new scope. *)
+        let context = Var.make_new_scope context in
+        generate_block_items context block_items
+  and generate_block_items context = function
     | [] -> ()
     | Statement statement :: rest ->
-        generate_statement var_map statement;
-        generate_block_items var_map rest
+        generate_statement context statement;
+        generate_block_items context rest
     | Declaration declaration :: rest -> (
         match declaration with
         | Declare (name, exp_option) ->
-            (* Check redefinition *)
-            let _ =
-              if Var.mem name var_map then
-                failwith (Printf.sprintf "redefinition of '%s'." name)
-              else ()
-            in
-            (* TODO: Fix for data size *)
             let size = 8 in
-            let var_map = Var.add name size var_map in
+            let stack_index = Var.stack_index context - size in
+            let context =
+              try Var.declare name size context
+              with Var.Redefinition ->
+                failwith (Printf.sprintf "redefinition of '%s'." name)
+            in
             let () =
               match exp_option with
               | None -> ()
               | Some exp -> (
-                  match Var.find name var_map with
-                  | {offset; size} ->
+                  match Var.find name context with
+                  | { size; _ } ->
                       (* Reserve a space of the local variable *)
                       print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
-                      generate_expression var_map exp;
+                      generate_expression context exp;
                       print_asm
-                        (Printf.sprintf "  mov %%rax, -%d(%%rbp)" offset))
+                        (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index))
             in
-            generate_block_items var_map rest)
+            generate_block_items context rest)
   in
   let generate_function_def = function
     | Function (Id name, block_items) ->
         print_asm (Printf.sprintf "%s:" name);
         print_asm "  push %rbp";
         print_asm "  movq %rsp, %rbp";
-        let var_map = Var.empty in
-        generate_block_items var_map block_items
+        let context = Var.empty in
+        generate_block_items context block_items
   in
   match ast with
   | Program fun_ast ->
