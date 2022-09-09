@@ -163,9 +163,9 @@ let parse_block_items tokens =
     | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
     | _ -> ([], tokens)
   in
-  let statements, rest = partition tokens in
+  let block_items, rest = partition tokens in
   match rest with
-  | CloseBrace :: [] -> statements
+  | CloseBrace :: [] -> block_items
   | _ ->
       print_endline (Lexer.inspect rest);
       failwith "Parse error. `}` is missing."
