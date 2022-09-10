@@ -99,7 +99,7 @@ let rec parse_expression tokens =
 
   parse_exp tokens
 
-let parse_statement tokens =
+let rec parse_statement tokens =
   let open Token in
   (* Split the statements and the rest *)
   let rec partition tokens =
@@ -117,19 +117,30 @@ let parse_statement tokens =
         let expression, rest = parse_expression rest in
         let statement, rest = partition rest in
         match rest with
+        (* `if` statement with block statement. *)
+        | ElseKeyword :: rest
+        (* `if` statement with one line statement. *)
         | Semicolon :: ElseKeyword :: rest ->
             let statement_for_else, rest = partition rest in
             (Ast.If (expression, statement, Some statement_for_else), rest)
         | _ -> (Ast.If (expression, statement, None), rest))
+    | OpenBrace :: rest ->
+        let block_items, rest = parse_block_items rest in
+        (Ast.Block block_items, rest)
     | IntKeyword :: _ -> failwith "expected expression before 'int'."
     | _ -> failwith "Unknown token to parse a statement."
   in
   let statement, rest = partition tokens in
   match rest with
-  | Semicolon :: rest -> (statement, rest)
-  | _ -> failwith "Parse error. `;` is expected."
+  | [] -> (statement, rest)
+  | CloseBrace :: rest | Semicolon :: rest -> (statement, rest)
+  | _ -> (
+      match statement with
+      (* `;` is not necessary for an ending of a block. *)
+      | Ast.Block _ -> (statement, rest)
+      | _ -> failwith "Parse error. `;` is expected.")
 
-let parse_declaration tokens =
+and parse_declaration tokens =
   let open Token in
   (* Split the statements and the rest *)
   let rec partition tokens =
@@ -144,15 +155,17 @@ let parse_declaration tokens =
   let declaration, rest = partition tokens in
   match rest with
   | Semicolon :: rest -> (declaration, rest)
-  | _ -> failwith "Parse error. `}` is missing."
+  | _ -> failwith "Parse error. `;` is missing."
 
-let parse_block_items tokens =
+and parse_block_items tokens =
   let open Token in
   (* Split the statements and the rest *)
   let rec partition tokens =
     match tokens with
+    | [] -> ([], [])
     | Semicolon :: rest -> partition rest
-    | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ ->
+    | CloseBrace :: rest -> ([], rest)
+    | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ | OpenBrace :: _ ->
         let statement, rest = parse_statement tokens in
         let other_block_items, rest = partition rest in
         (Ast.Statement statement :: other_block_items, rest)
@@ -161,20 +174,16 @@ let parse_block_items tokens =
         let other_block_items, rest = partition rest in
         (Ast.Declaration declaration :: other_block_items, rest)
     | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
-    | _ -> ([], tokens)
+    | _ -> failwith "Unexpected token."
   in
-  let block_items, rest = partition tokens in
-  match rest with
-  | CloseBrace :: [] -> block_items
-  | _ ->
-      print_endline (Lexer.inspect rest);
-      failwith "Parse error. `}` is missing."
+  partition tokens
 
 let parse_function_def tokens =
   let open Token in
   match tokens with
-  | IntKeyword :: Id name :: OpenParen :: CloseParen :: OpenBrace :: rest ->
-      Ast.Function (Ast.Id name, parse_block_items rest)
+  | IntKeyword :: Id name :: OpenParen :: CloseParen :: rest ->
+      let block_items, _rest = parse_block_items rest in
+      Ast.Function (Ast.Id name, block_items)
   | _ -> failwith "Parse error in a function." (* TODO: Kind error message *)
 
 let parse tokens = Ast.Program (parse_function_def tokens)
