@@ -176,7 +176,7 @@ let transpile ast =
               | None -> ()
               | Some exp -> (
                   match Var.find name var_map with
-                  | offset, size ->
+                  | {offset; size} ->
                       (* Reserve a space of the local variable *)
                       print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
                       generate_expression var_map exp;
