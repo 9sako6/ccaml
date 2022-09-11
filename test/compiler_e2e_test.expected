@@ -354,6 +354,38 @@ main:
   pop %rbp
   ret
 
+-- block_nested.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $2, %rax
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  pushq %rax
+  mov $3, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  setl %al
+  movzb %al, %rax
+  cmp $0, %rax
+  je after_else_3
+  sub $8, %rsp
+  mov $3, %rax
+  mov %rax, -16(%rbp)
+  mov -16(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  mov -8(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  jmp after_else_3
+after_else_3:
+
 -- declare_var.c --
 .globl  main
 main:
@@ -396,18 +428,18 @@ main:
   movq %rsp, %rbp
   mov $0, %rax
   cmp $0, %rax
-  je else_3
+  je else_4
   mov $2, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_3
-else_3:
+  jmp after_else_4
+else_4:
   mov $3, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_3:
+after_else_4:
 
 -- eq.c --
 .globl  main
@@ -467,13 +499,13 @@ main:
   movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
-  je after_else_4
+  je after_else_5
   mov $2, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_4
-after_else_4:
+  jmp after_else_5
+after_else_5:
 
 -- if_else.c --
 .globl  main
@@ -482,18 +514,18 @@ main:
   movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
-  je else_5
+  je else_6
   mov $2, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_5
-else_5:
+  jmp after_else_6
+else_6:
   mov $1, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_5:
+after_else_6:
 
 -- if_nested.c --
 .globl  main
@@ -508,19 +540,19 @@ main:
   mov %rax, -16(%rbp)
   mov -8(%rbp), %rax
   cmp $0, %rax
-  je else_6
+  je else_7
   mov $1, %rax
   mov %rax, -16(%rbp)
-  jmp after_else_6
-else_6:
+  jmp after_else_7
+else_7:
   mov -16(%rbp), %rax
   cmp $0, %rax
-  je after_else_7
+  je after_else_8
   mov $2, %rax
   mov %rax, -16(%rbp)
-  jmp after_else_7
+  jmp after_else_8
+after_else_8:
 after_else_7:
-after_else_6:
   mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
@@ -536,7 +568,7 @@ main:
   mov %rax, -8(%rbp)
   mov -8(%rbp), %rax
   cmp $0, %rax
-  je else_8
+  je else_9
   sub $8, %rsp
   mov $2, %rax
   mov %rax, -16(%rbp)
@@ -544,8 +576,8 @@ main:
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_8
-else_8:
+  jmp after_else_9
+else_9:
   sub $8, %rsp
   mov $3, %rax
   mov %rax, -16(%rbp)
@@ -558,23 +590,23 @@ else_8:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je else_9
+  je else_10
   mov $4, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_9
-else_9:
+  jmp after_else_10
+else_10:
   mov $5, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_9:
+after_else_10:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_8:
+after_else_9:
 
 -- less.c --
 .globl  main
@@ -654,15 +686,15 @@ main:
   movq %rsp, %rbp
   mov $2, %rax
   cmp $0, %rax
-  je right_of_or_clause_10
+  je right_of_or_clause_11
   mov $1, %rax
-  jmp goal_of_or_clause_10
-right_of_or_clause_10:
+  jmp goal_of_or_clause_11
+right_of_or_clause_11:
   mov $0, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_10:
+goal_of_or_clause_11:
   mov %rbp, %rsp
   pop %rbp
   ret
@@ -674,25 +706,25 @@ main:
   movq %rsp, %rbp
   mov $0, %rax
   cmp $0, %rax
-  je right_of_or_clause_12
+  je right_of_or_clause_13
   mov $1, %rax
-  jmp goal_of_or_clause_12
-right_of_or_clause_12:
+  jmp goal_of_or_clause_13
+right_of_or_clause_13:
   mov $0, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_12:
+goal_of_or_clause_13:
   cmp $0, %rax
-  je right_of_or_clause_11
+  je right_of_or_clause_12
   mov $1, %rax
-  jmp goal_of_or_clause_11
-right_of_or_clause_11:
+  jmp goal_of_or_clause_12
+right_of_or_clause_12:
   mov $1, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_11:
+goal_of_or_clause_12:
   mov %rbp, %rsp
   pop %rbp
   ret
@@ -804,6 +836,8 @@ main:
 -- block7.c --
 4
 -- block8.c --
+3
+-- block_nested.c --
 3
 -- declare_var.c --
 2
