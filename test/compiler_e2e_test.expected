@@ -602,11 +602,11 @@ else_10:
   pop %rbp
   ret
 after_else_10:
+after_else_9:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_9:
 
 -- less.c --
 .globl  main
