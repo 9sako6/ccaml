@@ -1,5 +1,6 @@
+open Token
+
 let rec parse_expression tokens =
-  let open Token in
   let construct_binary_op_exp op l r =
     match op with
     | Plus -> Ast.BinaryOp (Ast.Add, l, r)
@@ -32,9 +33,7 @@ let rec parse_expression tokens =
     construct_exp left_exp rest
   in
 
-  let rec parse_factor =
-    let open Token in
-    function
+  let rec parse_factor = function
     (* "(" <exp> ")" *)
     | OpenParen :: factor -> (
         let exp, after_exp = parse_expression factor in
@@ -99,88 +98,58 @@ let rec parse_expression tokens =
 
   parse_exp tokens
 
-let rec parse_statement tokens =
-  let open Token in
-  (* Split the statements and the rest *)
-  let rec partition tokens =
-    match tokens with
-    | Semicolon :: rest -> partition rest
-    | ReturnKeyword :: Semicolon :: _ ->
-        failwith "Parse error. `return` returns empty."
-    | ReturnKeyword :: rest ->
-        let expression, rest = parse_expression rest in
-        (Ast.Return expression, rest)
-    | (Id _name as var) :: Equal :: rest ->
-        let expression, rest = parse_expression (var :: Equal :: rest) in
-        (Ast.Exp expression, rest)
-    | IfKeyword :: rest -> (
-        let expression, rest = parse_expression rest in
-        let statement, rest = partition rest in
-        match rest with
-        (* `if` statement with block statement. *)
-        | ElseKeyword :: rest
-        (* `if` statement with one line statement. *)
-        | Semicolon :: ElseKeyword :: rest ->
-            let statement_for_else, rest = partition rest in
-            (Ast.If (expression, statement, Some statement_for_else), rest)
-        | _ -> (Ast.If (expression, statement, None), rest))
-    | OpenBrace :: rest ->
-        let block_items, rest = parse_block_items rest in
-        (Ast.Block block_items, rest)
-    | IntKeyword :: _ -> failwith "expected expression before 'int'."
-    | _ -> failwith "Unknown token to parse a statement."
-  in
-  let statement, rest = partition tokens in
-  match rest with
-  | [] -> (statement, rest)
-  | CloseBrace :: rest | Semicolon :: rest -> (statement, rest)
-  | _ -> (
-      match statement with
-      (* `;` is not necessary for an ending of a block. *)
-      | Ast.Block _ -> (statement, rest)
-      | _ -> failwith "Parse error. `;` is expected.")
+let rec parse_statement = function
+  | Semicolon :: rest -> parse_statement rest
+  | ReturnKeyword :: Semicolon :: _ ->
+      failwith "Parse error. `return` returns empty."
+  | ReturnKeyword :: rest ->
+      let expression, rest = parse_expression rest in
+      (Ast.Return expression, rest)
+  | (Id _name as var) :: Equal :: rest ->
+      let expression, rest = parse_expression (var :: Equal :: rest) in
+      (Ast.Exp expression, rest)
+  | IfKeyword :: rest -> (
+      let expression, rest = parse_expression rest in
+      let statement, rest = parse_statement rest in
+      match rest with
+      (* `if` statement with block statement. *)
+      | ElseKeyword :: rest
+      (* `if` statement with one line statement. *)
+      | Semicolon :: ElseKeyword :: rest ->
+          let statement_for_else, rest = parse_statement rest in
+          (Ast.If (expression, statement, Some statement_for_else), rest)
+      | _ -> (Ast.If (expression, statement, None), rest))
+  | OpenBrace :: rest ->
+      let block_items, rest = parse_block_items rest in
+      (Ast.Block block_items, rest)
+  | IntKeyword :: _ -> failwith "expected expression before 'int'."
+  | _ -> failwith "Unknown token to parse a statement."
 
-and parse_declaration tokens =
-  let open Token in
-  (* Split the statements and the rest *)
-  let rec partition tokens =
-    match tokens with
-    | Semicolon :: rest -> partition rest
-    | IntKeyword :: Id name :: Equal :: rest ->
-        let expression, rest = parse_expression rest in
-        (Ast.Declare (name, Some expression), rest)
-    | IntKeyword :: Id name :: rest -> (Ast.Declare (name, None), rest)
-    | _ -> failwith "Unknown token to parse a declaration."
-  in
-  let declaration, rest = partition tokens in
-  match rest with
-  | Semicolon :: rest -> (declaration, rest)
-  | _ -> failwith "Parse error. `;` is missing."
+and parse_declaration = function
+  | Semicolon :: rest -> parse_declaration rest
+  | IntKeyword :: Id name :: Equal :: rest ->
+      let expression, rest = parse_expression rest in
+      (Ast.Declare (name, Some expression), rest)
+  | IntKeyword :: Id name :: rest -> (Ast.Declare (name, None), rest)
+  | _ -> failwith "Unknown token to parse a declaration."
 
 and parse_block_items tokens =
-  let open Token in
-  (* Split the statements and the rest *)
-  let rec partition tokens =
-    match tokens with
-    | [] -> ([], [])
-    | Semicolon :: rest -> partition rest
-    | CloseBrace :: rest -> ([], rest)
-    | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ | OpenBrace :: _ ->
-        let statement, rest = parse_statement tokens in
-        let other_block_items, rest = partition rest in
-        (Ast.Statement statement :: other_block_items, rest)
-    | IntKeyword :: _ ->
-        let declaration, rest = parse_declaration tokens in
-        let other_block_items, rest = partition rest in
-        (Ast.Declaration declaration :: other_block_items, rest)
-    | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
-    | _ -> failwith "Unexpected token."
-  in
-  partition tokens
-
-let parse_function_def tokens =
-  let open Token in
   match tokens with
+  | [] -> ([], [])
+  | Semicolon :: rest -> parse_block_items rest
+  | CloseBrace :: rest -> ([], rest)
+  | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ | OpenBrace :: _ ->
+      let statement, rest = parse_statement tokens in
+      let other_block_items, rest = parse_block_items rest in
+      (Ast.Statement statement :: other_block_items, rest)
+  | IntKeyword :: _ ->
+      let declaration, rest = parse_declaration tokens in
+      let other_block_items, rest = parse_block_items rest in
+      (Ast.Declaration declaration :: other_block_items, rest)
+  | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
+  | _ -> failwith "Unexpected token."
+
+let parse_function_def = function
   | IntKeyword :: Id name :: OpenParen :: CloseParen :: rest ->
       let block_items, _rest = parse_block_items rest in
       Ast.Function (Ast.Id name, block_items)
