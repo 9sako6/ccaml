@@ -35,5 +35,10 @@ let () =
             (test_parse_error
                (Util.read "../../../examples/invalid/if_else_else.c")
                (Failure "'else' without a previous 'if'."));
+          (* TODO: Pass the test *)
+          (* Alcotest.test_case "extra `}`" `Quick
+             (test_parse_error
+                (Util.read "../../../examples/invalid/syntax_err_extra_brace.c")
+                (Failure "`{` is expected at a beginning of a block.")); *)
         ] );
     ]
