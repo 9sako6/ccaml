@@ -31,11 +31,13 @@ type block_item =
 
 and statement =
   | Return of exp
-  | Exp of exp
+  | Exp of exp option
   (* exp is controlling condition.
      The first statement is 'if' branch.
      The second statement is 'else' branch. *)
   | If of exp * statement * statement option
+  | For of exp option * exp * exp option * statement
+  | ForDecl of declaration * exp * exp option * statement
   | Block of block_item list
 
 (* declaration is not a statement. *)

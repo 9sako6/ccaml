@@ -107,7 +107,7 @@ let rec parse_statement = function
       (Ast.Return expression, rest)
   | (Id _name as var) :: Equal :: rest ->
       let expression, rest = parse_expression (var :: Equal :: rest) in
-      (Ast.Exp expression, rest)
+      (Ast.Exp (Some expression), rest)
   | IfKeyword :: rest -> (
       let expression, rest = parse_expression rest in
       let statement, rest = parse_statement rest in
@@ -119,11 +119,40 @@ let rec parse_statement = function
           let statement_for_else, rest = parse_statement rest in
           (Ast.If (expression, statement, Some statement_for_else), rest)
       | _ -> (Ast.If (expression, statement, None), rest))
+  | ForKeyword :: OpenParen :: rest ->
+      parse_for_statement (ForKeyword :: OpenParen :: rest)
   | OpenBrace :: rest ->
       let block_items, rest = parse_block_items rest in
       (Ast.Block block_items, rest)
   | IntKeyword :: _ -> failwith "expected expression before 'int'."
   | _ -> failwith "Unknown token to parse a statement."
+
+and parse_for_statement tokens =
+  match tokens with
+  | ForKeyword :: OpenParen :: rest ->
+      let initial_expression, rest = parse_expression rest in
+      let condition_expression, rest =
+        match rest with
+        | Semicolon :: rest -> parse_expression rest
+        | _ -> failwith ""
+      in
+      let post_expression, rest =
+        match rest with
+        | Semicolon :: rest -> parse_expression rest
+        | _ -> failwith ""
+      in
+      let statement, rest =
+        match rest with
+        | CloseParen :: rest -> parse_statement rest
+        | _ -> failwith ""
+      in
+      ( Ast.For
+          ( Some initial_expression,
+            condition_expression,
+            Some post_expression,
+            statement ),
+        rest )
+  | _ -> failwith ""
 
 and parse_declaration = function
   | Semicolon :: rest -> parse_declaration rest
@@ -138,7 +167,11 @@ and parse_block_items tokens =
   | [] -> ([], [])
   | Semicolon :: rest -> parse_block_items rest
   | CloseBrace :: rest -> ([], rest)
-  | ReturnKeyword :: _ | Id _ :: _ | IfKeyword :: _ | OpenBrace :: _ ->
+  | ReturnKeyword :: _
+  | Id _ :: _
+  | IfKeyword :: _
+  | ForKeyword :: _
+  | OpenBrace :: _ ->
       let statement, rest = parse_statement tokens in
       let other_block_items, rest = parse_block_items rest in
       (Ast.Statement statement :: other_block_items, rest)

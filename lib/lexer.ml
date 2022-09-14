@@ -24,6 +24,7 @@ let token_length =
   | IntKeyword -> 3
   | IfKeyword -> 2
   | ElseKeyword -> 4
+  | ForKeyword -> 3
   | Int i -> String.length (string_of_int i)
   | Id str -> String.length str
 
@@ -40,6 +41,7 @@ let get_int_or_id_token input =
     | "int" -> IntKeyword
     | "if" -> IfKeyword
     | "else" -> ElseKeyword
+    | "for" -> ForKeyword
     | _ -> Id matched_string
   else
     raise
