@@ -115,7 +115,21 @@ let rec inspect_statement indent statement =
           if_string
           ^ Printf.sprintf "%s↳ Else\n%s" indent
               (inspect_statement next_indent statement))
-  | For _ -> ""
+  | For (init_exp_option, condition_exp, post_exp_option, statement) ->
+      let init_string =
+        match init_exp_option with
+        | None -> ""
+        | Some exp -> inspect_exp next_indent exp
+      in
+      let condition_string = inspect_exp next_indent condition_exp in
+      let post_string =
+        match post_exp_option with
+        | None -> ""
+        | Some exp -> inspect_exp next_indent exp
+      in
+      let statement_string = inspect_statement next_indent statement in
+      Printf.sprintf "%s↳ For\n%s%s%s%s" indent init_string condition_string
+        post_string statement_string
   | ForDecl _ -> ""
   | Block block_items ->
       let block_items_string =

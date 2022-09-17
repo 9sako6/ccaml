@@ -36,4 +36,7 @@ let () =
       "int main() {\n    return 1 + 2 / 7;\n}";
       "int main() {\n    return (1 + 2) * 9;\n}";
       "int main() {\n    return 1 / 0;\n}";
+      (* for *)
+      "int main() {int i; int j = 0; for(i = 0; i < 10; i = i + 1){ j = i }; \
+       return j;}";
     ]
