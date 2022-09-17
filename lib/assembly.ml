@@ -186,7 +186,7 @@ let transpile ast =
         generate_block_items context rest
     | Declaration declaration :: rest -> (
         match declaration with
-        | Declare (name, exp_option) ->
+        | Declare (name, exp_option) -> (
             let size = 8 in
             let stack_index = Var.stack_index context - size in
             let context =
@@ -194,19 +194,15 @@ let transpile ast =
               with Var.Redefinition ->
                 failwith (Printf.sprintf "redefinition of '%s'." name)
             in
-            let () =
-              match exp_option with
-              | None -> ()
-              | Some exp -> (
-                  match Var.find name context with
-                  | { size; _ } ->
-                      (* Reserve a space of the local variable *)
-                      print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
-                      generate_expression context exp;
-                      print_asm
-                        (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index))
-            in
-            generate_block_items context rest)
+            match Var.find name context with
+            | { size; _ } ->
+                (* Reserve a space of the local variable *)
+                print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
+                (match exp_option with
+                | None -> ()
+                | Some exp -> generate_expression context exp);
+                print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index);
+                generate_block_items context rest))
   in
   let generate_function_def = function
     | Function (Id name, block_items) ->
