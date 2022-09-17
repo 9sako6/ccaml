@@ -890,6 +890,10 @@ main:
 0
 -- for.c --
 9
+-- for2.c --
+10
+-- for3.c --
+9
 -- greater.c --
 1
 -- greater_or_equal.c --
