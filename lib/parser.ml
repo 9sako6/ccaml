@@ -98,7 +98,8 @@ let rec parse_expression tokens =
 
   parse_exp tokens
 
-let rec parse_statement = function
+let rec parse_statement tokens =
+  match tokens with
   | Semicolon :: rest -> parse_statement rest
   | ReturnKeyword :: Semicolon :: _ ->
       failwith "Parse error. `return` returns empty."
@@ -125,7 +126,9 @@ let rec parse_statement = function
       let block_items, rest = parse_block_items rest in
       (Ast.Block block_items, rest)
   | IntKeyword :: _ -> failwith "expected expression before 'int'."
-  | _ -> failwith "Unknown token to parse a statement."
+  | _ ->
+      let exp, rest = parse_expression tokens in
+      (Ast.Exp (Some exp), rest)
 
 and parse_for_statement tokens =
   match tokens with
@@ -203,7 +206,10 @@ and parse_block_items tokens =
       let other_block_items, rest = parse_block_items rest in
       (Ast.Declaration declaration :: other_block_items, rest)
   | ElseKeyword :: _ -> failwith "'else' without a previous 'if'."
-  | _ -> failwith "Unexpected token."
+  | _ ->
+      let statement, rest = parse_statement tokens in
+      let other_block_items, rest = parse_block_items rest in
+      (Ast.Statement statement :: other_block_items, rest)
 
 let parse_function_def = function
   | IntKeyword :: Id name :: OpenParen :: CloseParen :: rest ->
