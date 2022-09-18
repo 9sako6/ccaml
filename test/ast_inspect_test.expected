@@ -145,3 +145,50 @@ Program
      ↳ Const(value: 1)
      ↳ Const(value: 0)
 ==========
+int main() {int i; int j = 0; for(i = 0; i < 10; i = i + 1){ j = i }; return j;}
+Program
+ ↳ Function(name: main)
+  ↳ Block
+   ↳ Declare(name: i)
+   ↳ Declare(name: j)
+    ↳ Const(value: 0)
+   ↳ For
+    ↳ Assign(name: i)
+     ↳ Const(value: 0)
+    ↳ <
+     ↳ Var(name: i)
+     ↳ Const(value: 10)
+    ↳ Assign(name: i)
+     ↳ +
+      ↳ Var(name: i)
+      ↳ Const(value: 1)
+    ↳ Block
+     ↳ Exp
+      ↳ Assign(name: j)
+       ↳ Var(name: i)
+   ↳ Return
+    ↳ Var(name: j)
+==========
+int main() {int j = 0; for(int i = 0; i < 10; i = i + 1){ j = i }; return j;}
+Program
+ ↳ Function(name: main)
+  ↳ Block
+   ↳ Declare(name: j)
+    ↳ Const(value: 0)
+   ↳ For
+    ↳ Declare(name: i)
+     ↳ Const(value: 0)
+    ↳ <
+     ↳ Var(name: i)
+     ↳ Const(value: 10)
+    ↳ Assign(name: i)
+     ↳ +
+      ↳ Var(name: i)
+      ↳ Const(value: 1)
+    ↳ Block
+     ↳ Exp
+      ↳ Assign(name: j)
+       ↳ Var(name: i)
+   ↳ Return
+    ↳ Var(name: j)
+==========

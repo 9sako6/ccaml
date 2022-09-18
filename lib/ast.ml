@@ -31,11 +31,13 @@ type block_item =
 
 and statement =
   | Return of exp
-  | Exp of exp
+  | Exp of exp option
   (* exp is controlling condition.
      The first statement is 'if' branch.
      The second statement is 'else' branch. *)
   | If of exp * statement * statement option
+  | For of exp option * exp * exp option * statement
+  | ForDecl of declaration * exp * exp option * statement
   | Block of block_item list
 
 (* declaration is not a statement. *)
@@ -96,7 +98,11 @@ let rec inspect_statement indent statement =
   match statement with
   | Return exp ->
       Printf.sprintf "%s↳ Return\n%s" indent (inspect_exp next_indent exp)
-  | Exp exp -> Printf.sprintf "%s↳ Exp\n%s" indent (inspect_exp next_indent exp)
+  | Exp exp_option -> (
+      match exp_option with
+      | None -> Printf.sprintf "%s↳ Exp(null)" indent
+      | Some exp ->
+          Printf.sprintf "%s↳ Exp\n%s" indent (inspect_exp next_indent exp))
   | If (exp, statement_for_if, statement_for_else_option) -> (
       let exp_string = inspect_exp indent exp in
       let if_string =
@@ -109,6 +115,32 @@ let rec inspect_statement indent statement =
           if_string
           ^ Printf.sprintf "%s↳ Else\n%s" indent
               (inspect_statement next_indent statement))
+  | ForDecl (declaration, condition_exp, post_exp_option, statement) ->
+      let init_string = inspect_declaration next_indent declaration in
+      let condition_string = inspect_exp next_indent condition_exp in
+      let post_string =
+        match post_exp_option with
+        | None -> ""
+        | Some exp -> inspect_exp next_indent exp
+      in
+      let statement_string = inspect_statement next_indent statement in
+      Printf.sprintf "%s↳ For\n%s%s%s%s" indent init_string condition_string
+        post_string statement_string
+  | For (init_exp_option, condition_exp, post_exp_option, statement) ->
+      let init_string =
+        match init_exp_option with
+        | None -> ""
+        | Some exp -> inspect_exp next_indent exp
+      in
+      let condition_string = inspect_exp next_indent condition_exp in
+      let post_string =
+        match post_exp_option with
+        | None -> ""
+        | Some exp -> inspect_exp next_indent exp
+      in
+      let statement_string = inspect_statement next_indent statement in
+      Printf.sprintf "%s↳ For\n%s%s%s%s" indent init_string condition_string
+        post_string statement_string
   | Block block_items ->
       let block_items_string =
         Util.join (List.map (inspect_block_item (indent ^ " ")) block_items)

@@ -132,7 +132,10 @@ let transpile ast =
         print_asm "  mov %rbp, %rsp";
         print_asm "  pop %rbp";
         print_asm "  ret"
-    | Exp exp -> generate_expression context exp
+    | Exp exp_option -> (
+        match exp_option with
+        | None -> ()
+        | Some exp -> generate_expression context exp)
     | If (exp, if_statement, statement_option) -> (
         let clause_id = Util.unique_id () in
         let else_label = Printf.sprintf "else_%d" clause_id in
@@ -152,38 +155,73 @@ let transpile ast =
             generate_statement context if_statement;
             print_asm (Printf.sprintf "  jmp %s" goal_label);
             print_asm (Printf.sprintf "%s:" goal_label))
+    | For (init_exp_option, condition_exp, post_exp_option, statement) ->
+        let condition_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+        let goal_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+        (* Evaluate initial expression. *)
+        (match init_exp_option with
+        | None -> ()
+        | Some exp -> generate_expression context exp);
+        (* Evaluate condition. If it's false, it's done. *)
+        print_asm (Printf.sprintf "  jmp %s" condition_label);
+        print_asm (Printf.sprintf "%s:" condition_label);
+        generate_expression context condition_exp;
+        print_asm "  cmp $0, %rax";
+        print_asm (Printf.sprintf "  je %s" goal_label);
+        generate_statement context statement;
+        (match post_exp_option with
+        | None -> ()
+        | Some exp -> generate_expression context exp);
+        print_asm (Printf.sprintf "  jmp %s" condition_label);
+        print_asm (Printf.sprintf "%s:" goal_label)
+    | ForDecl (declaration, condition_exp, post_exp_option, statement) ->
+        let condition_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+        let goal_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+        (* Evaluate declaration. *)
+        let context = generate_declaration context declaration in
+        (* Evaluate condition. If it's false, it's done. *)
+        print_asm (Printf.sprintf "  jmp %s" condition_label);
+        print_asm (Printf.sprintf "%s:" condition_label);
+        generate_expression context condition_exp;
+        print_asm "  cmp $0, %rax";
+        print_asm (Printf.sprintf "  je %s" goal_label);
+        generate_statement context statement;
+        (match post_exp_option with
+        | None -> ()
+        | Some exp -> generate_expression context exp);
+        print_asm (Printf.sprintf "  jmp %s" condition_label);
+        print_asm (Printf.sprintf "%s:" goal_label)
     | Block block_items ->
         (* Add a new scope. *)
         let context = Var.make_new_scope context in
         generate_block_items context block_items
+  and generate_declaration context declaration =
+    match declaration with
+    | Declare (name, exp_option) -> (
+        let size = 8 in
+        let stack_index = Var.stack_index context - size in
+        let context =
+          try Var.declare name size context
+          with Var.Redefinition ->
+            failwith (Printf.sprintf "redefinition of '%s'." name)
+        in
+        match Var.find name context with
+        | { size; _ } ->
+            (* Reserve a space of the local variable *)
+            print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
+            (match exp_option with
+            | None -> ()
+            | Some exp -> generate_expression context exp);
+            print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index);
+            context)
   and generate_block_items context = function
     | [] -> ()
     | Statement statement :: rest ->
         generate_statement context statement;
         generate_block_items context rest
-    | Declaration declaration :: rest -> (
-        match declaration with
-        | Declare (name, exp_option) ->
-            let size = 8 in
-            let stack_index = Var.stack_index context - size in
-            let context =
-              try Var.declare name size context
-              with Var.Redefinition ->
-                failwith (Printf.sprintf "redefinition of '%s'." name)
-            in
-            let () =
-              match exp_option with
-              | None -> ()
-              | Some exp -> (
-                  match Var.find name context with
-                  | { size; _ } ->
-                      (* Reserve a space of the local variable *)
-                      print_asm (Printf.sprintf "  sub $%d, %%rsp" size);
-                      generate_expression context exp;
-                      print_asm
-                        (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index))
-            in
-            generate_block_items context rest)
+    | Declaration declaration :: rest ->
+        let context = generate_declaration context declaration in
+        generate_block_items context rest
   in
   let generate_function_def = function
     | Function (Id name, block_items) ->

@@ -1,8 +1,11 @@
 <program> ::= <function>
 <function> ::= "int" <id> "(" ")" "{" { <block-item> } "}"
 <block-item> ::= <statement> | <declaration>
+<exp-option> ::= <exp> | ""
 <statement> ::= "return" <exp> ";"
-  | <exp> ";"
+  | <exp-option> ";"
+  | "for" "(" <exp-option> ";" <exp> ";" <exp-option> ")" <statement>
+  | "for" "(" <declaration> <exp-option> ";" <exp> ";" <exp-option> ")" <statement>
   | "if" "(" <exp> ")" <statement> [ "else" <statement> ]
   | "{" { <block-item> } "}"
 <declaration> := "int" <id> [ = <exp>] ";"
