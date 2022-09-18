@@ -1083,6 +1083,32 @@ main:
   pop %rbp
   ret
 
+-- unused_exp.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $3, %rax
+  pushq %rax
+  mov $3, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov $0, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- unused_exp2.c --
+.globl  main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $0, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- add.c --
 12
 -- and.c --
@@ -1173,3 +1199,7 @@ main:
 1
 -- sub_neg.c --
 3
+-- unused_exp.c --
+0
+-- unused_exp2.c --
+0
