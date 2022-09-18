@@ -35,6 +35,11 @@ let () =
             (test_parse_error
                (Util.read "../../../examples/invalid/if_else_else.c")
                (Failure "'else' without a previous 'if'."));
+          Alcotest.test_case "'for' with too few clauses" `Quick
+            (test_parse_error
+               (Util.read
+                  "../../../examples/invalid/syntax_err_too_few_for_clauses.c")
+               (Failure "expected `;`."));
           (* TODO: Pass the test *)
           (* Alcotest.test_case "extra `}`" `Quick
              (test_parse_error

@@ -134,26 +134,17 @@ and parse_for_statement tokens =
       let condition_expression, rest =
         match rest with
         | Semicolon :: rest -> parse_expression rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       let post_expression, rest =
         match rest with
         | Semicolon :: rest -> parse_expression rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       let statement, rest =
         match rest with
         | CloseParen :: rest -> parse_statement rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       ( Ast.ForDecl
           (declaration, condition_expression, Some post_expression, statement),
@@ -163,26 +154,17 @@ and parse_for_statement tokens =
       let condition_expression, rest =
         match rest with
         | Semicolon :: rest -> parse_expression rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       let post_expression, rest =
         match rest with
         | Semicolon :: rest -> parse_expression rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       let statement, rest =
         match rest with
         | CloseParen :: rest -> parse_statement rest
-        | _ ->
-            failwith
-              (Printf.sprintf "Unexpected token %s for `for` statement."
-                 (Token.to_string (List.hd rest)))
+        | _ -> failwith "expected `;`."
       in
       ( Ast.For
           ( Some initial_expression,
@@ -192,7 +174,7 @@ and parse_for_statement tokens =
         rest )
   | _ ->
       failwith
-        (Printf.sprintf "Unexpected token %s for `for` statement."
+        (Printf.sprintf "Unexpected token `%s` for `for` statement."
            (Token.to_string (List.hd tokens)))
 
 and parse_declaration = function
