@@ -129,6 +129,26 @@ let rec parse_statement = function
 
 and parse_for_statement tokens =
   match tokens with
+  | ForKeyword :: OpenParen :: IntKeyword :: rest ->
+      let declaration, rest = parse_declaration (IntKeyword :: rest) in
+      let condition_expression, rest =
+        match rest with
+        | Semicolon :: rest -> parse_expression rest
+        | _ -> failwith ""
+      in
+      let post_expression, rest =
+        match rest with
+        | Semicolon :: rest -> parse_expression rest
+        | _ -> failwith ""
+      in
+      let statement, rest =
+        match rest with
+        | CloseParen :: rest -> parse_statement rest
+        | _ -> failwith ""
+      in
+      ( Ast.ForDecl
+          (declaration, condition_expression, Some post_expression, statement),
+        rest )
   | ForKeyword :: OpenParen :: rest ->
       let initial_expression, rest = parse_expression rest in
       let condition_expression, rest =
