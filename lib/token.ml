@@ -50,6 +50,8 @@ type token =
   | IfKeyword
   | ElseKeyword
   | ForKeyword
+  | BreakKeyword
+  | ContinueKeyword
   (* integer literal *)
   | Int of int
   (* identifier *)
@@ -83,5 +85,7 @@ let to_string = function
   | IfKeyword -> "IF"
   | ElseKeyword -> "ELSE"
   | ForKeyword -> "FOR"
+  | BreakKeyword -> "BREAK"
+  | ContinueKeyword -> "CONTINUE"
   | Int i -> Printf.sprintf "INT<%d>" i
   | Id str -> Printf.sprintf "ID<%s>" str

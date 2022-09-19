@@ -10,9 +10,17 @@ type var_map = var VarMap.t
 type context = {
   outer_scope : var_map;
   current_scope : var_map;
+  break_label : string option;
+  continue_label : string option;
 }
 
-let empty = { outer_scope = VarMap.empty; current_scope = VarMap.empty }
+let empty =
+  {
+    outer_scope = VarMap.empty;
+    current_scope = VarMap.empty;
+    break_label = None;
+    continue_label = None;
+  }
 
 let make_new_scope context =
   let new_outer_scope =
@@ -20,7 +28,12 @@ let make_new_scope context =
       (fun _key _old_val new_val -> Some new_val)
       context.outer_scope context.current_scope
   in
-  { outer_scope = new_outer_scope; current_scope = VarMap.empty }
+  {
+    outer_scope = new_outer_scope;
+    current_scope = VarMap.empty;
+    break_label = context.break_label;
+    continue_label = context.continue_label;
+  }
 
 let mem name = VarMap.mem name
 
@@ -45,8 +58,29 @@ let declare name size context =
   let current_scope =
     VarMap.add name { offset = offset + size; size } context.current_scope
   in
-  { outer_scope = context.outer_scope; current_scope }
+  {
+    outer_scope = context.outer_scope;
+    current_scope;
+    break_label = context.break_label;
+    continue_label = context.continue_label;
+  }
 
 let find name context =
   try VarMap.find name context.current_scope
   with Not_found -> VarMap.find name context.outer_scope
+
+let set_berak_label label context =
+  {
+    outer_scope = context.outer_scope;
+    current_scope = context.current_scope;
+    break_label = Some label;
+    continue_label = context.continue_label;
+  }
+
+let set_continue_label label context =
+  {
+    outer_scope = context.outer_scope;
+    current_scope = context.current_scope;
+    break_label = context.break_label;
+    continue_label = Some label;
+  }

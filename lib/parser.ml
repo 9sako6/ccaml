@@ -125,6 +125,8 @@ let rec parse_statement tokens =
   | OpenBrace :: rest ->
       let block_items, rest = parse_block_items rest in
       (Ast.Block block_items, rest)
+  | BreakKeyword :: rest -> (Ast.Break, rest)
+  | ContinueKeyword :: rest -> (Ast.Continue, rest)
   | IntKeyword :: _ -> failwith "expected expression before 'int'."
   | _ ->
       let exp, rest = parse_expression tokens in
@@ -197,6 +199,8 @@ and parse_block_items tokens =
   | Id _ :: _
   | IfKeyword :: _
   | ForKeyword :: _
+  | BreakKeyword :: _
+  | ContinueKeyword :: _
   | OpenBrace :: _ ->
       let statement, rest = parse_statement tokens in
       let other_block_items, rest = parse_block_items rest in

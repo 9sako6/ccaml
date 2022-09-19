@@ -25,6 +25,8 @@ let token_length =
   | IfKeyword -> 2
   | ElseKeyword -> 4
   | ForKeyword -> 3
+  | BreakKeyword -> 5
+  | ContinueKeyword -> 8
   | Int i -> String.length (string_of_int i)
   | Id str -> String.length str
 
@@ -42,6 +44,8 @@ let get_int_or_id_token input =
     | "if" -> IfKeyword
     | "else" -> ElseKeyword
     | "for" -> ForKeyword
+    | "break" -> BreakKeyword
+    | "continue" -> ContinueKeyword
     | _ -> Id matched_string
   else
     raise

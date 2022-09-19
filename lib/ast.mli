@@ -39,6 +39,8 @@ and statement =
   | For of exp option * exp * exp option * statement
   | ForDecl of declaration * exp * exp option * statement
   | Block of block_item list
+  | Break
+  | Continue
 
 (* declaration is not a statement. *)
 and declaration =
