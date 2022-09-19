@@ -155,46 +155,54 @@ let transpile ast =
             generate_statement context if_statement;
             print_asm (Printf.sprintf "  jmp %s" goal_label);
             print_asm (Printf.sprintf "%s:" goal_label))
-    | For (init_exp_option, condition_exp, post_exp_option, statement) ->
-        let condition_label = Printf.sprintf "L%d" (Util.unique_id ()) in
-        let goal_label = Printf.sprintf "L%d" (Util.unique_id ()) in
-        (* Evaluate initial expression. *)
-        (match init_exp_option with
-        | None -> ()
-        | Some exp -> generate_expression context exp);
-        (* Evaluate condition. If it's false, it's done. *)
-        print_asm (Printf.sprintf "  jmp %s" condition_label);
-        print_asm (Printf.sprintf "%s:" condition_label);
-        generate_expression context condition_exp;
-        print_asm "  cmp $0, %rax";
-        print_asm (Printf.sprintf "  je %s" goal_label);
-        generate_statement context statement;
-        (match post_exp_option with
-        | None -> ()
-        | Some exp -> generate_expression context exp);
-        print_asm (Printf.sprintf "  jmp %s" condition_label);
-        print_asm (Printf.sprintf "%s:" goal_label)
-    | ForDecl (declaration, condition_exp, post_exp_option, statement) ->
-        let condition_label = Printf.sprintf "L%d" (Util.unique_id ()) in
-        let goal_label = Printf.sprintf "L%d" (Util.unique_id ()) in
-        (* Evaluate declaration. *)
-        let context = generate_declaration context declaration in
-        (* Evaluate condition. If it's false, it's done. *)
-        print_asm (Printf.sprintf "  jmp %s" condition_label);
-        print_asm (Printf.sprintf "%s:" condition_label);
-        generate_expression context condition_exp;
-        print_asm "  cmp $0, %rax";
-        print_asm (Printf.sprintf "  je %s" goal_label);
-        generate_statement context statement;
-        (match post_exp_option with
-        | None -> ()
-        | Some exp -> generate_expression context exp);
-        print_asm (Printf.sprintf "  jmp %s" condition_label);
-        print_asm (Printf.sprintf "%s:" goal_label)
+    | For _ | ForDecl _ -> generate_for_statement context statement
     | Block block_items ->
         (* Add a new scope. *)
         let context = Var.make_new_scope context in
         generate_block_items context block_items
+    | Break -> (
+        match context.break_label with
+        | None -> failwith "A label for `break` is not found"
+        | Some label -> print_asm (Printf.sprintf "  jmp %s" label))
+    | Continue -> (
+        match context.continue_label with
+        | None -> failwith "A label for `continue` is not found"
+        | Some label -> print_asm (Printf.sprintf "  jmp %s" label))
+  and generate_for_statement context statement =
+    let condition_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+    let continue_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+    let goal_label = Printf.sprintf "L%d" (Util.unique_id ()) in
+    let context, condition_exp, post_exp_option, statement =
+      match statement with
+      | For (init_exp_option, condition_exp, post_exp_option, statement) ->
+          (* Evaluate initial expression. *)
+          (match init_exp_option with
+          | None -> ()
+          | Some exp -> generate_expression context exp);
+          (context, condition_exp, post_exp_option, statement)
+      | ForDecl (declaration, condition_exp, post_exp_option, statement) ->
+          (* Evaluate declaration. *)
+          let context = generate_declaration context declaration in
+          (context, condition_exp, post_exp_option, statement)
+      | _ -> failwith "Invalid `for` statement."
+    in
+    (* Set label for break. *)
+    let context = Var.set_berak_label goal_label context in
+    (* Set label for continue *)
+    let context = Var.set_continue_label continue_label context in
+    (* Evaluate condition. If it's false, it's done. *)
+    print_asm (Printf.sprintf "%s:" condition_label);
+    generate_expression context condition_exp;
+    print_asm "  cmp $0, %rax";
+    print_asm (Printf.sprintf "  je %s" goal_label);
+    generate_statement context statement;
+    (* Evaluate post expresssion. *)
+    print_asm (Printf.sprintf "%s:" continue_label);
+    (match post_exp_option with
+    | None -> ()
+    | Some exp -> generate_expression context exp);
+    print_asm (Printf.sprintf "  jmp %s" condition_label);
+    print_asm (Printf.sprintf "%s:" goal_label)
   and generate_declaration context declaration =
     match declaration with
     | Declare (name, exp_option) -> (

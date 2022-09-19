@@ -39,6 +39,8 @@ and statement =
   | For of exp option * exp * exp option * statement
   | ForDecl of declaration * exp * exp option * statement
   | Block of block_item list
+  | Break
+  | Continue
 
 (* declaration is not a statement. *)
 and declaration =
@@ -146,6 +148,8 @@ let rec inspect_statement indent statement =
         Util.join (List.map (inspect_block_item (indent ^ " ")) block_items)
       in
       Printf.sprintf "%s↳ Block\n%s" indent block_items_string
+  | Break -> Printf.sprintf "%s↳ Break" indent
+  | Continue -> Printf.sprintf "%s↳ Continue" indent
 
 and inspect_declaration indent = function
   | Declare (name, exp_option) -> (
