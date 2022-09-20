@@ -22,13 +22,17 @@ let rec parse_expression tokens =
     (* Join expressions of the same precedence for left-associative *)
     let left_exp, rest = parse_next tokens in
     let rec construct_exp left_exp tokens =
-      let operator = List.hd tokens in
-      if List.mem operator operators then
-        (* left-associative *)
-        let right_exp, rest = parse_next (List.tl tokens) in
-        let left_exp = construct_binary_op_exp operator left_exp right_exp in
-        construct_exp left_exp rest
-      else (left_exp, tokens)
+      match tokens with
+      | [] -> (left_exp, tokens)
+      | operator :: rest ->
+          if List.mem operator operators then
+            (* left-associative *)
+            let right_exp, rest = parse_next rest in
+            let left_exp =
+              construct_binary_op_exp operator left_exp right_exp
+            in
+            construct_exp left_exp rest
+          else (left_exp, tokens)
     in
     construct_exp left_exp rest
   in
@@ -123,11 +127,28 @@ let rec parse_statement tokens =
   | ForKeyword :: OpenParen :: rest ->
       parse_for_statement (ForKeyword :: OpenParen :: rest)
   | OpenBrace :: rest ->
-      let block_items, rest = parse_block_items rest in
+      let split_block_tokens_and_others tokens =
+        let rec split index score tails block_tokens =
+          match tails with
+          | [] -> failwith "fail to parse block."
+          | head :: rest ->
+              let new_score =
+                if head == OpenBrace then score + 1
+                else if head == CloseBrace then score - 1
+                else score
+              in
+              if new_score == 0 then (block_tokens, rest)
+              else split (index + 1) new_score rest (block_tokens @ [ head ])
+        in
+        split 0 1 tokens []
+      in
+      let block_tokens, rest = split_block_tokens_and_others rest in
+      let block_items, _ = parse_block_items block_tokens in
       (Ast.Block block_items, rest)
   | BreakKeyword :: rest -> (Ast.Break, rest)
   | ContinueKeyword :: rest -> (Ast.Continue, rest)
   | IntKeyword :: _ -> failwith "expected expression before 'int'."
+  | CloseBrace :: _ -> failwith "too many `}`."
   | _ ->
       let exp, rest = parse_expression tokens in
       (Ast.Exp (Some exp), rest)
@@ -194,7 +215,6 @@ and parse_block_items tokens =
   match tokens with
   | [] -> ([], [])
   | Semicolon :: rest -> parse_block_items rest
-  | CloseBrace :: rest -> ([], rest)
   | ReturnKeyword :: _
   | Id _ :: _
   | IfKeyword :: _
