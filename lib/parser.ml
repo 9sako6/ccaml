@@ -37,6 +37,17 @@ let rec parse_expression tokens =
     construct_exp left_exp rest
   in
 
+  let parse_actual_params tokens =
+    let rec split heads tails =
+      match tails with
+      | [] -> ([], [])
+      | CloseParen :: rest -> (heads, rest)
+      | head :: rest -> split (heads @ [ head ]) rest
+    in
+    let params_tokens, rest = split [] tokens in
+    (params_tokens, rest)
+  in
+
   let rec parse_factor = function
     (* "(" <exp> ")" *)
     | OpenParen :: factor -> (
@@ -56,6 +67,9 @@ let rec parse_expression tokens =
         (Ast.UnaryOp (Ast.Not, exp), rest)
     (* <int> *)
     | Int n :: rest -> (Ast.Const n, rest)
+    | Id name :: OpenParen :: rest ->
+        let _params, rest = parse_actual_params rest in
+        (Ast.FunCall (name, []), rest)
     | Id name :: rest -> (Ast.Var name, rest)
     | IfKeyword :: _ -> failwith "expected expression before 'if'."
     | _ -> failwith "Parse error. This is an invalid factor."
@@ -214,6 +228,9 @@ and parse_declaration = function
 and parse_block_items tokens =
   match tokens with
   | [] -> ([], [])
+  | IntKeyword :: Id _ :: OpenParen :: _ ->
+      (* function definition *)
+      ([], tokens)
   | Semicolon :: rest -> parse_block_items rest
   | ReturnKeyword :: _
   | Id _ :: _
@@ -235,10 +252,38 @@ and parse_block_items tokens =
       let other_block_items, rest = parse_block_items rest in
       (Ast.Statement statement :: other_block_items, rest)
 
-let parse_function_def = function
-  | IntKeyword :: Id name :: OpenParen :: CloseParen :: rest ->
-      let block_items, _rest = parse_block_items rest in
-      Ast.Function (Ast.Id name, block_items)
+let parse_params tokens =
+  let rec split heads tails =
+    match tails with
+    | [] -> ([], [])
+    | CloseParen :: rest -> (heads, rest)
+    | head :: rest -> split (heads @ [ head ]) rest
+  in
+  let params_tokens, rest = split [] tokens in
+  (List.map Token.to_string params_tokens, rest)
+
+let parse_function_definition = function
+  | IntKeyword :: Id name :: OpenParen :: rest ->
+      let params_tokens, rest = parse_params rest in
+      let block_items, rest = parse_block_items rest in
+      ( Ast.Function
+          {
+            name;
+            params = params_tokens;
+            body = (if block_items == [] then None else Some block_items);
+          },
+        rest )
   | _ -> failwith "Parse error in a function." (* TODO: Kind error message *)
 
-let parse tokens = Ast.Program (parse_function_def tokens)
+let rec parse_functions tokens =
+  match tokens with
+  | [] -> ([], [])
+  | IntKeyword :: Id _ :: OpenParen :: _ ->
+      let func, rest = parse_function_definition tokens in
+      let ohter_funcs, rest = parse_functions rest in
+      (func :: ohter_funcs, rest)
+  | _ -> failwith "Parse error in parse_functions"
+
+let parse tokens =
+  let funcs, _rest = parse_functions tokens in
+  Ast.Program funcs

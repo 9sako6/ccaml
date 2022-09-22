@@ -1,5 +1,89 @@
+open Ast
+
+(* Validate that AST has valid function declarations and definitions. *)
+let validate ast =
+  let module FunctionMap = Map.Make (String) in
+  let find_definition name func_map =
+    try Some (FunctionMap.find (name ^ " definition") func_map)
+    with Not_found -> None
+  in
+  let find_declaration name func_map =
+    try Some (FunctionMap.find (name ^ " declaration") func_map)
+    with Not_found -> None
+  in
+  let validate existing_def incomming_def =
+    let validate_params existing_params incomming_params =
+      if
+        List.equal
+          (fun param_name_a param_name_b ->
+            String.equal param_name_a param_name_b)
+          existing_params incomming_params
+      then true
+      else failwith "number of arguments doesn't match prototype."
+    in
+    let validate_body name existing_body incomming_body =
+      match (existing_body, incomming_body) with
+      | None, None -> true
+      | None, Some _ -> true
+      | Some _, None -> true
+      | Some _, Some _ -> failwith (Printf.sprintf "redefinition of '%s'." name)
+    in
+    match (existing_def, incomming_def) with
+    | ( Function { name; params; body },
+        Function { name = _new_name; params = new_params; body = new_body } ) ->
+        validate_params params new_params && validate_body name body new_body
+  in
+  let rec validate_functions function_def_list func_map =
+    match function_def_list with
+    | [] -> true
+    | (Function { name; body; _ } as incomming_func_def_or_decl) :: rest -> (
+        let label =
+          name
+          ^
+          match body with
+          | Some _ -> " definition"
+          | None -> " declaration"
+        in
+        let existing_func_def_option = find_definition name func_map in
+        let existing_func_decl_option = find_declaration name func_map in
+        match (existing_func_def_option, existing_func_decl_option) with
+        | None, None ->
+            (* First declaration or definition *)
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            validate_functions rest func_map
+        | None, Some existing_func_decl ->
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            if validate existing_func_decl incomming_func_def_or_decl then
+              validate_functions rest func_map
+            else false
+        | Some existing_func_def, None ->
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            if validate existing_func_def incomming_func_def_or_decl then
+              validate_functions rest func_map
+            else false
+        | Some existing_func_def, Some existing_func_decl ->
+            if
+              validate existing_func_def incomming_func_def_or_decl
+              && validate existing_func_decl incomming_func_def_or_decl
+            then validate_functions rest func_map
+            else false)
+  in
+  match ast with
+  | Program function_def_list ->
+      let func_map = FunctionMap.empty in
+      validate_functions function_def_list func_map
+
 let transpile ast =
-  let open Ast in
+  let () =
+    if validate ast then ()
+    else failwith "invalid function definitions or declarations"
+  in
   let s = ref "" in
   let print_asm row = s := !s ^ row ^ "\n" in
   let generate_binary_operation = function
@@ -36,6 +120,7 @@ let transpile ast =
     | _ -> failwith "Unknown binary operator."
   in
   let rec generate_expression context = function
+    | FunCall (_name, _params) -> ()
     | Var name -> (
         try
           let var = Var.find name context in
@@ -232,15 +317,17 @@ let transpile ast =
         generate_block_items context rest
   in
   let generate_function_def = function
-    | Function (Id name, block_items) ->
+    | Function { name; body = block_items_option; _ } -> (
         print_asm (Printf.sprintf "%s:" name);
         print_asm "  push %rbp";
         print_asm "  movq %rsp, %rbp";
         let context = Var.empty in
-        generate_block_items context block_items
+        match block_items_option with
+        | None -> ()
+        | Some block_items -> generate_block_items context block_items)
   in
   match ast with
-  | Program fun_ast ->
+  | Program function_def_list ->
       print_asm ".globl  main";
-      generate_function_def fun_ast;
+      generate_function_def (List.hd function_def_list);
       !s

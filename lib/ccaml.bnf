@@ -1,5 +1,5 @@
-<program> ::= <function>
-<function> ::= "int" <id> "(" ")" "{" { <block-item> } "}"
+<program> ::= { <function> }
+<function> ::= "int" <id> "(" [ "int" <id> { "," "int" <id> } ] ")" ( "{" { <block-item> } "}" | ";" )
 <block-item> ::= <statement> | <declaration>
 <exp-option> ::= <exp> | ""
 <statement> ::= "return" <exp> ";"
@@ -18,5 +18,6 @@
 <add-sub-exp> ::= <mult-div-exp> { ("+" | "-") <mult-div-exp> }
 <mult-div-exp> ::= <factor> { ("*" | "/") <factor> }
 /* <factor> is a symbol for unary operators. <factor> has higher precedence than binary operators. */
-<factor> ::= "(" <exp> ")" | <unary_op> <factor> | <int> | <id>
+<factor> ::= <function-call> | "(" <exp> ")" | <unary_op> <factor> | <int> | <id>
 <unary_op> ::= "!" | "-" | "~"
+<function-call> ::= <id> "(" [ <exp> { "," <exp> } ] ")"
