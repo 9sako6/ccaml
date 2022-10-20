@@ -3,7 +3,7 @@ open Ccaml
 let test_transpile () =
   Alcotest.(check string)
     "return 29 program"
-    ".globl  main\n\
+    "  .global main\n\
      main:\n\
     \  push %rbp\n\
     \  movq %rsp, %rbp\n\

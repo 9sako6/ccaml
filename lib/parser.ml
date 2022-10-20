@@ -44,8 +44,21 @@ let rec parse_expression tokens =
       | CloseParen :: rest -> (heads, rest)
       | head :: rest -> split (heads @ [ head ]) rest
     in
+    let rec parse_params exps tokens_for_exp tails =
+      match tails with
+      | [] ->
+          if List.length tokens_for_exp > 0 then
+            let exp, _ = parse_expression tokens_for_exp in
+            exps @ [ exp ]
+          else exps
+      | Comma :: rest ->
+          let exp, _ = parse_expression tokens_for_exp in
+          parse_params (exps @ [ exp ]) [] rest
+      | head :: rest -> parse_params exps (tokens_for_exp @ [ head ]) rest
+    in
     let params_tokens, rest = split [] tokens in
-    (params_tokens, rest)
+    let exps = parse_params [] [] params_tokens in
+    (exps, rest)
   in
 
   let rec parse_factor = function
@@ -68,8 +81,8 @@ let rec parse_expression tokens =
     (* <int> *)
     | Int n :: rest -> (Ast.Const n, rest)
     | Id name :: OpenParen :: rest ->
-        let _params, rest = parse_actual_params rest in
-        (Ast.FunCall (name, []), rest)
+        let params, rest = parse_actual_params rest in
+        (Ast.FunCall (name, params), rest)
     | Id name :: rest -> (Ast.Var name, rest)
     | IfKeyword :: _ -> failwith "expected expression before 'if'."
     | _ -> failwith "Parse error. This is an invalid factor."
@@ -99,10 +112,10 @@ let rec parse_expression tokens =
   let rec parse_ternary_exp tokens =
     let exp, rest = parse_or_exp tokens in
     match rest with
-    | Token.Question :: rest -> (
+    | Question :: rest -> (
         let exp2, rest = parse_exp rest in
         match rest with
-        | Token.Colon :: rest ->
+        | Colon :: rest ->
             let exp3, rest = parse_ternary_exp rest in
             (Ast.Condition (exp, exp2, exp3), rest)
         | _ -> failwith "`:` is expected as a ternary operator.")
@@ -257,10 +270,13 @@ let parse_params tokens =
     match tails with
     | [] -> ([], [])
     | CloseParen :: rest -> (heads, rest)
-    | head :: rest -> split (heads @ [ head ]) rest
+    | head :: rest -> (
+        match head with
+        | Id name -> split (heads @ [ name ]) rest
+        | _ -> split heads rest)
   in
   let params_tokens, rest = split [] tokens in
-  (List.map Token.to_string params_tokens, rest)
+  (params_tokens, rest)
 
 let parse_function_definition = function
   | IntKeyword :: Id name :: OpenParen :: rest ->

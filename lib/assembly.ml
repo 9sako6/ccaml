@@ -13,12 +13,7 @@ let validate ast =
   in
   let validate existing_def incomming_def =
     let validate_params existing_params incomming_params =
-      if
-        List.equal
-          (fun param_name_a param_name_b ->
-            String.equal param_name_a param_name_b)
-          existing_params incomming_params
-      then true
+      if List.length existing_params == List.length incomming_params then true
       else failwith "number of arguments doesn't match prototype."
     in
     let validate_body name existing_body incomming_body =
@@ -82,7 +77,7 @@ let validate ast =
 let transpile ast =
   let () =
     if validate ast then ()
-    else failwith "invalid function definitions or declarations"
+    else failwith "invalid function definitions or declarations."
   in
   let s = ref "" in
   let print_asm row = s := !s ^ row ^ "\n" in
@@ -120,11 +115,24 @@ let transpile ast =
     | _ -> failwith "Unknown binary operator."
   in
   let rec generate_expression context = function
-    | FunCall (_name, _params) -> ()
+    | FunCall (name, params) ->
+        (* Push params from right to left. *)
+        let rec generate_params = function
+          | [] -> ()
+          | head :: rest ->
+              generate_expression context head;
+              print_asm "  pushq %rax";
+              generate_params rest
+        in
+        generate_params (List.rev params);
+        (* Call function. *)
+        print_asm (Printf.sprintf "  call %s" name);
+        (* Clear params. *)
+        print_asm (Printf.sprintf "  add $%d, %%rsp" (8 * List.length params))
     | Var name -> (
         try
           let var = Var.find name context in
-          print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" var.offset)
+          print_asm (Printf.sprintf "  mov %d(%%rbp), %%rax" var.index)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
@@ -133,7 +141,7 @@ let transpile ast =
         try
           let var = Var.find name context in
           generate_expression context exp;
-          print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" var.offset)
+          print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" var.index)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
@@ -292,7 +300,7 @@ let transpile ast =
     match declaration with
     | Declare (name, exp_option) -> (
         let size = 8 in
-        let stack_index = Var.stack_index context - size in
+        (* let stack_index = Var.stack_index context - size in *)
         let context =
           try Var.declare name size context
           with Var.Redefinition ->
@@ -305,7 +313,8 @@ let transpile ast =
             (match exp_option with
             | None -> ()
             | Some exp -> generate_expression context exp);
-            print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index);
+            print_asm
+              (Printf.sprintf "  mov %%rax, %d(%%rbp)" context.stack_index);
             context)
   and generate_block_items context = function
     | [] -> ()
@@ -316,18 +325,40 @@ let transpile ast =
         let context = generate_declaration context declaration in
         generate_block_items context rest
   in
-  let generate_function_def = function
-    | Function { name; body = block_items_option; _ } -> (
-        print_asm (Printf.sprintf "%s:" name);
-        print_asm "  push %rbp";
-        print_asm "  movq %rsp, %rbp";
-        let context = Var.empty in
+  let generate_function = function
+    | Function { name; body = block_items_option; params } -> (
         match block_items_option with
-        | None -> ()
-        | Some block_items -> generate_block_items context block_items)
+        | None ->
+            (* This is a function declaration. *)
+            ()
+        | Some block_items ->
+            print_asm (Printf.sprintf "  .global %s" name);
+            print_asm (Printf.sprintf "%s:" name);
+            print_asm "  push %rbp";
+            print_asm "  movq %rsp, %rbp";
+            let context = Var.empty in
+            let size = 8 in
+            let rec declare_params params index context =
+              match params with
+              | [] -> context
+              | name :: rest ->
+                  let index = index + size in
+                  let context = Var.add_param name size index context in
+                  declare_params rest index context
+            in
+            (* Skip spaces used by RBP and `call` mnemonic. *)
+            let index = 8 in
+            let context =
+              try declare_params params index context
+              with Var.Redefinition ->
+                failwith (Printf.sprintf "redefinition of '%s'." name)
+            in
+            generate_block_items context block_items)
+  in
+  let generate_functions function_def_list =
+    List.iter generate_function function_def_list
   in
   match ast with
   | Program function_def_list ->
-      print_asm ".globl  main";
-      generate_function_def (List.hd function_def_list);
+      let () = generate_functions function_def_list in
       !s

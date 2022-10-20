@@ -1349,6 +1349,10 @@ main:
 3
 -- eq.c --
 0
+-- expression_args.c --
+14
+-- fib.c --
+5
 -- for.c --
 9
 -- for2.c --
@@ -1365,6 +1369,8 @@ main:
 11
 -- for_continue.c --
 55
+-- forward_decl_multi_arg.c --
+255
 -- greater.c --
 1
 -- greater_or_equal.c --
@@ -1385,8 +1391,12 @@ main:
 12
 -- nested_for_break.c --
 151
+-- no_args.c --
+3
 -- not_eq.c --
 1
+-- one_arg.c --
+11
 -- or.c --
 1
 -- or2.c --
