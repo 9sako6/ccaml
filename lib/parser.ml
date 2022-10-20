@@ -278,7 +278,7 @@ let parse_params tokens =
   let params_tokens, rest = split [] tokens in
   (params_tokens, rest)
 
-let parse_function_definition = function
+let parse_function = function
   | IntKeyword :: Id name :: OpenParen :: rest ->
       let params_tokens, rest = parse_params rest in
       let block_items, rest = parse_block_items rest in
@@ -289,13 +289,13 @@ let parse_function_definition = function
             body = (if block_items == [] then None else Some block_items);
           },
         rest )
-  | _ -> failwith "Parse error in a function." (* TODO: Kind error message *)
+  | _ -> failwith "Parse error in a function."
 
 let rec parse_functions tokens =
   match tokens with
   | [] -> ([], [])
   | IntKeyword :: Id _ :: OpenParen :: _ ->
-      let func, rest = parse_function_definition tokens in
+      let func, rest = parse_function tokens in
       let ohter_funcs, rest = parse_functions rest in
       (func :: ohter_funcs, rest)
   | _ -> failwith "Parse error in parse_functions"
