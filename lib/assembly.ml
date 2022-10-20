@@ -28,8 +28,8 @@ let validate ast =
         Function { name = _new_name; params = new_params; body = new_body } ) ->
         validate_params params new_params && validate_body name body new_body
   in
-  let rec validate_functions function_def_list func_map =
-    match function_def_list with
+  let rec validate_functions functions func_map =
+    match functions with
     | [] -> true
     | (Function { name; body; _ } as incomming_func_def_or_decl) :: rest -> (
         let label =
@@ -70,9 +70,9 @@ let validate ast =
             else false)
   in
   match ast with
-  | Program function_def_list ->
+  | Program functions ->
       let func_map = FunctionMap.empty in
-      validate_functions function_def_list func_map
+      validate_functions functions func_map
 
 let transpile ast =
   let () =
@@ -363,10 +363,8 @@ let transpile ast =
             in
             generate_block_items context block_items)
   in
-  let generate_functions function_def_list =
-    List.iter generate_function function_def_list
-  in
+  let generate_functions functions = List.iter generate_function functions in
   match ast with
-  | Program function_def_list ->
-      let () = generate_functions function_def_list in
+  | Program functions ->
+      let () = generate_functions functions in
       !s

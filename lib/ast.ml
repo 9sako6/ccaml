@@ -50,14 +50,18 @@ and declaration =
 
 type id = Id of string
 
-type function_def =
+type func =
   | Function of {
       name : string;
       params : string list;
-      body : block_item list option; (* declaration and definition *)
+      (*
+        A function definition has some block items.
+        A function declaration has none.
+      *)
+      body : block_item list option;
     }
 
-type program = Program of function_def list
+type program = Program of func list
 
 let rec inspect_exp indent =
   let next_indent = indent ^ " " in
@@ -172,7 +176,7 @@ and inspect_block_item indent = function
   | Statement statement -> inspect_statement indent statement
   | Declaration declaration -> inspect_declaration indent declaration
 
-let inspect_function_def indent = function
+let inspect_function indent = function
   | Function { name; body = block_items_option; _ } ->
       let block_items_string =
         match block_items_option with
@@ -184,9 +188,7 @@ let inspect_function_def indent = function
 
 let inspect program_node =
   match program_node with
-  | Program function_def_list ->
+  | Program functions ->
       let indent = " " in
-      let function_def_strings =
-        List.map (inspect_function_def indent) function_def_list
-      in
-      Printf.sprintf "Program\n%s" (Util.join function_def_strings)
+      let function_strings = List.map (inspect_function indent) functions in
+      Printf.sprintf "Program\n%s" (Util.join function_strings)
