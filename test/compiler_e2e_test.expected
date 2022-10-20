@@ -1261,6 +1261,3896 @@ main:
   pop %rbp
   ret
 
+-- long_code.c --
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $84, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $89, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $71, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $69, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $82, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $33, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $84, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $33, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $73, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $67, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $73, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $112, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $107, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $66, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $79, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $112, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $122, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $65, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $38, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $67, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $65, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $38, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $99, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $73, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $99, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $118, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $112, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $68, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $99, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $112, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $112, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $65, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $39, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $118, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $68, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $107, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $68, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $119, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $76, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $107, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $84, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $33, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $84, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $33, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $98, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $73, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $103, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $105, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $110, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $68, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $104, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $97, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $102, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $117, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $115, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $109, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $116, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $121, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $63, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $0, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- mult.c --
   .global main
 main:
@@ -1670,6 +5560,37 @@ Hello, World!
 -- less.c --
 0
 -- less_or_equal.c --
+0
+-- long_code.c --
+TYGER! Tyger! burning bright
+In the forests of the night,
+What immortal hand or eye
+Could frame thy fearful symmetry?
+
+In what distant deeps or skies
+Burnt the fire of thine eyes?
+On what wings dare he aspire?
+What the hand dare sieze the fire?
+
+And what shoulder, & what art,
+Could twist the sinews of thy heart?
+And when thy heart began to beat,
+What dread hand? & what dread feet?
+
+What the hammer? What the chain?
+In what furnace was thy brain?
+What the anvil? what dread grasp
+Dare its deadly terrors clasp?
+
+When the stars threw down their spears,
+And water'd heaven with thier tears,
+Did he smile his work to see?
+Did he who made the Lamb make thee?
+
+Tyger! Tyger! burning bright
+In the forests of the night,
+What immortal hand or eye,
+Dare frame thy fearful symmetry?
 0
 -- mult.c --
 12
