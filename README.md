@@ -1,14 +1,48 @@
-# ccaml
+# CCaml
 
-A compiler for a small subset of the C language implemented in OCaml.
+A toy C compiler written in OCaml.
 
 ## Usage
 
+Let's print `Hello, World!`.
+
+```bash
+$ dune exec ccaml examples/valid/hello_world.c | gcc -xassembler - && ./a.out
+Hello, World!
+```
+
+The `examples/valid/hello_world.c` program is the following.
+
+```c
+int putchar(int c);
+
+int main() {
+    putchar(72);
+    putchar(101);
+    putchar(108);
+    putchar(108);
+    putchar(111);
+    putchar(44);
+    putchar(32);
+    putchar(87);
+    putchar(111);
+    putchar(114);
+    putchar(108);
+    putchar(100);
+    putchar(33);
+    putchar(10);
+
+    return 0;
+}
+```
+
 ```bash
 # Generate assembly
-dune exec ccaml source.c
+$ dune exec ccaml source.c
+# Execute a program with GCC assembler
+$ dune exec ccaml source.c | gcc -xassembler - && ./a.out
 # Run test
-dune runtest
+$ dune test
 ```
 
 ## References
@@ -23,7 +57,7 @@ dune runtest
 1. [C Compiler, Part 8: Loops](https://norasandler.com/2018/04/10/Write-a-Compiler-8.html)
 1. [C Compiler, Part 9: Functions](https://norasandler.com/2018/06/27/Write-a-Compiler-9.html)
 1. [nlsandler/nqcc: A compiler for a tiny (but growing!) subset of C, written in OCaml.](https://github.com/nlsandler/nqcc)
-1. [低レイヤを知りたい人のためのCコンパイラ作成入門](https://www.sigbus.info/compilerbook)
-1. [x86アセンブリ言語での関数コール](https://vanya.jp.net/os/x86call/)
+1. [低レイヤを知りたい人のための C コンパイラ作成入門](https://www.sigbus.info/compilerbook)
+1. [x86 アセンブリ言語での関数コール](https://vanya.jp.net/os/x86call/)
 1. [AT&T assembly syntax and IA-32 instructions](https://gist.github.com/mishurov/6bcf04df329973c15044)
 1. [Online GCC Assembler - online editor](https://www.onlinegdb.com/online_gcc_assembler)
