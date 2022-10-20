@@ -58,3 +58,10 @@ let set_berak_label label context = { context with break_label = Some label }
 
 let set_continue_label label context =
   { context with continue_label = Some label }
+
+(*
+  System V AMD64 ABI
+
+  Integer/Pointer Arguments 1-6
+*)
+let registers = [| "rdi"; "rsi"; "rdx"; "rcx"; " r8"; "r9" |]

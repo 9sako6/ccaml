@@ -117,14 +117,22 @@ let transpile ast =
   let rec generate_expression context = function
     | FunCall (name, params) ->
         (* Push params from right to left. *)
-        let rec generate_params = function
+        let rec generate_params index = function
           | [] -> ()
           | head :: rest ->
               generate_expression context head;
+              (*
+                 Copy a parameter to a register specified by System V AMD64 ABI.
+                 However, no registers are used in my functions.
+                 These registers are intended to be used in standard library functions.
+              *)
+              print_asm
+                (Printf.sprintf "  mov %%rax, %%%s"
+                   (Array.get Var.registers index));
               print_asm "  pushq %rax";
-              generate_params rest
+              generate_params index rest
         in
-        generate_params (List.rev params);
+        generate_params (List.length params - 1) (List.rev params);
         (* Call function. *)
         print_asm (Printf.sprintf "  call %s" name);
         (* Clear params. *)
