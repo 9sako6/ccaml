@@ -54,43 +54,44 @@ let get_int_or_id_token input =
 
 let tokenize input =
   let open Token in
-  let rec tokens sub_input =
-    match Util.split sub_input with
+  let rec tokens chars =
+    match chars with
     | [] -> []
-    | " " :: rest | "\n" :: rest -> tokens (Util.join rest)
-    | "{" :: rest -> OpenBrace :: tokens (Util.join rest)
-    | "}" :: rest -> CloseBrace :: tokens (Util.join rest)
-    | "(" :: rest -> OpenParen :: tokens (Util.join rest)
-    | ")" :: rest -> CloseParen :: tokens (Util.join rest)
-    | ";" :: rest -> Semicolon :: tokens (Util.join rest)
-    | "+" :: rest -> Plus :: tokens (Util.join rest)
-    | "-" :: rest -> Minus :: tokens (Util.join rest)
-    | "*" :: rest -> Asterisk :: tokens (Util.join rest)
-    | "/" :: rest -> Slash :: tokens (Util.join rest)
-    | "~" :: rest -> Tilde :: tokens (Util.join rest)
-    | "?" :: rest -> Question :: tokens (Util.join rest)
-    | ":" :: rest -> Colon :: tokens (Util.join rest)
-    | "!" :: "=" :: rest -> NotEqual :: tokens (Util.join rest)
-    | "!" :: rest -> Exclamation :: tokens (Util.join rest)
-    | "&" :: "&" :: rest -> And :: tokens (Util.join rest)
-    | "|" :: "|" :: rest -> Or :: tokens (Util.join rest)
-    | "=" :: "=" :: rest -> EqualEqual :: tokens (Util.join rest)
-    | "=" :: rest -> Equal :: tokens (Util.join rest)
-    | "<" :: "=" :: rest -> LessThanOrEqual :: tokens (Util.join rest)
-    | "<" :: rest -> LessThan :: tokens (Util.join rest)
-    | ">" :: "=" :: rest -> GreaterThanOrEqual :: tokens (Util.join rest)
-    | ">" :: rest -> GreaterThan :: tokens (Util.join rest)
-    | "," :: rest -> Comma :: tokens (Util.join rest)
+    | ' ' :: rest | '\n' :: rest -> tokens rest
+    | '{' :: rest -> OpenBrace :: tokens rest
+    | '}' :: rest -> CloseBrace :: tokens rest
+    | '(' :: rest -> OpenParen :: tokens rest
+    | ')' :: rest -> CloseParen :: tokens rest
+    | ';' :: rest -> Semicolon :: tokens rest
+    | '+' :: rest -> Plus :: tokens rest
+    | '-' :: rest -> Minus :: tokens rest
+    | '*' :: rest -> Asterisk :: tokens rest
+    | '/' :: rest -> Slash :: tokens rest
+    | '~' :: rest -> Tilde :: tokens rest
+    | '?' :: rest -> Question :: tokens rest
+    | ':' :: rest -> Colon :: tokens rest
+    | '!' :: '=' :: rest -> NotEqual :: tokens rest
+    | '!' :: rest -> Exclamation :: tokens rest
+    | '&' :: '&' :: rest -> And :: tokens rest
+    | '|' :: '|' :: rest -> Or :: tokens rest
+    | '=' :: '=' :: rest -> EqualEqual :: tokens rest
+    | '=' :: rest -> Equal :: tokens rest
+    | '<' :: '=' :: rest -> LessThanOrEqual :: tokens rest
+    | '<' :: rest -> LessThan :: tokens rest
+    | '>' :: '=' :: rest -> GreaterThanOrEqual :: tokens rest
+    | '>' :: rest -> GreaterThan :: tokens rest
+    | ',' :: rest -> Comma :: tokens rest
     | _ :: _ ->
+        let sub_input = String_util.implode chars in
         let token = get_int_or_id_token sub_input in
         let token_length = token_length token in
         let rest_sub_input =
           String.sub sub_input token_length
             (String.length sub_input - token_length)
         in
-        token :: tokens rest_sub_input
+        token :: tokens (String_util.explode rest_sub_input)
   in
-  tokens input
+  tokens (String_util.explode input)
 
 let rec inspect tokens =
   match tokens with
