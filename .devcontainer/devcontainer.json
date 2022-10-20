@@ -40,7 +40,8 @@
 				"esbenp.prettier-vscode",
 				"ms-azuretools.vscode-docker",
 				"yzhang.markdown-all-in-one",
-				"ocamllabs.ocaml-platform"
+				"ocamllabs.ocaml-platform",
+				"eamodio.gitlens"
 			]
 		}
 	}
