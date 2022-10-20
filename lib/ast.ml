@@ -18,6 +18,7 @@ type binary_op =
   | GreaterThanOrEqual
 
 type exp =
+  | FunCall of string * exp list (* string is function name *)
   | Var of string (* string is variable name *)
   | Assign of string * exp (* string is variable name *)
   | Const of int
@@ -48,16 +49,24 @@ and declaration =
   | Declare of string * exp option
 
 type id = Id of string
-type function_def = Function of (id * block_item list)
-type program = Program of function_def
+
+type function_def =
+  | Function of {
+      name : string;
+      params : string list;
+      body : block_item list option; (* declaration and definition *)
+    }
+
+type program = Program of function_def list
 
 let rec inspect_exp indent =
   let next_indent = indent ^ " " in
   function
+  | FunCall (name, _params) -> Printf.sprintf "%s↳ Call(name: %s)\n" indent name
   | Var name -> Printf.sprintf "%s↳ Var(name: %s)\n" indent name
   | Assign (name, exp) ->
       Printf.sprintf "%s↳ Assign(name: %s)\n%s" indent name
-        (inspect_exp (indent ^ " ") exp)
+        (inspect_exp next_indent exp)
   | Const n -> Printf.sprintf "%s↳ Const(value: %s)\n" indent (string_of_int n)
   | UnaryOp (operator, expression) ->
       let operator =
@@ -164,15 +173,20 @@ and inspect_block_item indent = function
   | Declaration declaration -> inspect_declaration indent declaration
 
 let inspect_function_def indent = function
-  | Function (Id name, block_items) ->
+  | Function { name; body = block_items_option; _ } ->
       let block_items_string =
-        Util.join (List.map (inspect_block_item (indent ^ " ")) block_items)
+        match block_items_option with
+        | None -> ""
+        | Some block_items ->
+            Util.join (List.map (inspect_block_item (indent ^ " ")) block_items)
       in
       Printf.sprintf "%s↳ Function(name: %s)\n%s" indent name block_items_string
 
 let inspect program_node =
   match program_node with
-  | Program function_def_node ->
+  | Program function_def_list ->
       let indent = " " in
-      Printf.sprintf "Program\n%s"
-        (inspect_function_def indent function_def_node)
+      let function_def_strings =
+        List.map (inspect_function_def indent) function_def_list
+      in
+      Printf.sprintf "Program\n%s" (Util.join function_def_strings)

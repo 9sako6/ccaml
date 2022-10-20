@@ -1,5 +1,84 @@
+open Ast
+
+(* Validate that AST has valid function declarations and definitions. *)
+let validate ast =
+  let module FunctionMap = Map.Make (String) in
+  let find_definition name func_map =
+    try Some (FunctionMap.find (name ^ " definition") func_map)
+    with Not_found -> None
+  in
+  let find_declaration name func_map =
+    try Some (FunctionMap.find (name ^ " declaration") func_map)
+    with Not_found -> None
+  in
+  let validate existing_def incomming_def =
+    let validate_params existing_params incomming_params =
+      if List.length existing_params == List.length incomming_params then true
+      else failwith "number of arguments doesn't match prototype."
+    in
+    let validate_body name existing_body incomming_body =
+      match (existing_body, incomming_body) with
+      | None, None -> true
+      | None, Some _ -> true
+      | Some _, None -> true
+      | Some _, Some _ -> failwith (Printf.sprintf "redefinition of '%s'." name)
+    in
+    match (existing_def, incomming_def) with
+    | ( Function { name; params; body },
+        Function { name = _new_name; params = new_params; body = new_body } ) ->
+        validate_params params new_params && validate_body name body new_body
+  in
+  let rec validate_functions function_def_list func_map =
+    match function_def_list with
+    | [] -> true
+    | (Function { name; body; _ } as incomming_func_def_or_decl) :: rest -> (
+        let label =
+          name
+          ^
+          match body with
+          | Some _ -> " definition"
+          | None -> " declaration"
+        in
+        let existing_func_def_option = find_definition name func_map in
+        let existing_func_decl_option = find_declaration name func_map in
+        match (existing_func_def_option, existing_func_decl_option) with
+        | None, None ->
+            (* First declaration or definition *)
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            validate_functions rest func_map
+        | None, Some existing_func_decl ->
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            if validate existing_func_decl incomming_func_def_or_decl then
+              validate_functions rest func_map
+            else false
+        | Some existing_func_def, None ->
+            let func_map =
+              FunctionMap.add label incomming_func_def_or_decl func_map
+            in
+            if validate existing_func_def incomming_func_def_or_decl then
+              validate_functions rest func_map
+            else false
+        | Some existing_func_def, Some existing_func_decl ->
+            if
+              validate existing_func_def incomming_func_def_or_decl
+              && validate existing_func_decl incomming_func_def_or_decl
+            then validate_functions rest func_map
+            else false)
+  in
+  match ast with
+  | Program function_def_list ->
+      let func_map = FunctionMap.empty in
+      validate_functions function_def_list func_map
+
 let transpile ast =
-  let open Ast in
+  let () =
+    if validate ast then ()
+    else failwith "invalid function definitions or declarations."
+  in
   let s = ref "" in
   let print_asm row = s := !s ^ row ^ "\n" in
   let generate_binary_operation = function
@@ -36,10 +115,32 @@ let transpile ast =
     | _ -> failwith "Unknown binary operator."
   in
   let rec generate_expression context = function
+    | FunCall (name, params) ->
+        (* Push params from right to left. *)
+        let rec generate_params index = function
+          | [] -> ()
+          | head :: rest ->
+              generate_expression context head;
+              (*
+                 Copy a parameter to a register specified by System V AMD64 ABI.
+                 However, no registers are used in my functions.
+                 These registers are intended to be used in standard library functions.
+              *)
+              print_asm
+                (Printf.sprintf "  mov %%rax, %%%s"
+                   (Array.get Var.registers index));
+              print_asm "  pushq %rax";
+              generate_params index rest
+        in
+        generate_params (List.length params - 1) (List.rev params);
+        (* Call function. *)
+        print_asm (Printf.sprintf "  call %s" name);
+        (* Clear params. *)
+        print_asm (Printf.sprintf "  add $%d, %%rsp" (8 * List.length params))
     | Var name -> (
         try
           let var = Var.find name context in
-          print_asm (Printf.sprintf "  mov -%d(%%rbp), %%rax" var.offset)
+          print_asm (Printf.sprintf "  mov %d(%%rbp), %%rax" var.index)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
@@ -48,7 +149,7 @@ let transpile ast =
         try
           let var = Var.find name context in
           generate_expression context exp;
-          print_asm (Printf.sprintf "  mov %%rax, -%d(%%rbp)" var.offset)
+          print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" var.index)
         with Not_found ->
           failwith
             (Printf.sprintf "'%s' undeclared (first use in this function)." name)
@@ -207,7 +308,7 @@ let transpile ast =
     match declaration with
     | Declare (name, exp_option) -> (
         let size = 8 in
-        let stack_index = Var.stack_index context - size in
+        (* let stack_index = Var.stack_index context - size in *)
         let context =
           try Var.declare name size context
           with Var.Redefinition ->
@@ -220,7 +321,8 @@ let transpile ast =
             (match exp_option with
             | None -> ()
             | Some exp -> generate_expression context exp);
-            print_asm (Printf.sprintf "  mov %%rax, %d(%%rbp)" stack_index);
+            print_asm
+              (Printf.sprintf "  mov %%rax, %d(%%rbp)" context.stack_index);
             context)
   and generate_block_items context = function
     | [] -> ()
@@ -231,16 +333,40 @@ let transpile ast =
         let context = generate_declaration context declaration in
         generate_block_items context rest
   in
-  let generate_function_def = function
-    | Function (Id name, block_items) ->
-        print_asm (Printf.sprintf "%s:" name);
-        print_asm "  push %rbp";
-        print_asm "  movq %rsp, %rbp";
-        let context = Var.empty in
-        generate_block_items context block_items
+  let generate_function = function
+    | Function { name; body = block_items_option; params } -> (
+        match block_items_option with
+        | None ->
+            (* This is a function declaration. *)
+            ()
+        | Some block_items ->
+            print_asm (Printf.sprintf "  .global %s" name);
+            print_asm (Printf.sprintf "%s:" name);
+            print_asm "  push %rbp";
+            print_asm "  movq %rsp, %rbp";
+            let context = Var.empty in
+            let size = 8 in
+            let rec declare_params params index context =
+              match params with
+              | [] -> context
+              | name :: rest ->
+                  let index = index + size in
+                  let context = Var.add_param name size index context in
+                  declare_params rest index context
+            in
+            (* Skip spaces used by RBP and `call` mnemonic. *)
+            let index = 8 in
+            let context =
+              try declare_params params index context
+              with Var.Redefinition ->
+                failwith (Printf.sprintf "redefinition of '%s'." name)
+            in
+            generate_block_items context block_items)
+  in
+  let generate_functions function_def_list =
+    List.iter generate_function function_def_list
   in
   match ast with
-  | Program fun_ast ->
-      print_asm ".globl  main";
-      generate_function_def fun_ast;
+  | Program function_def_list ->
+      let () = generate_functions function_def_list in
       !s

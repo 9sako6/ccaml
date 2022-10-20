@@ -18,7 +18,8 @@ let token_length =
   | LessThan
   | GreaterThan
   | Exclamation
-  | Question -> 1
+  | Question
+  | Comma -> 1
   | And | Or | EqualEqual | GreaterThanOrEqual | LessThanOrEqual | NotEqual -> 2
   | ReturnKeyword -> 6
   | IntKeyword -> 3
@@ -79,6 +80,7 @@ let tokenize input =
     | "<" :: rest -> LessThan :: tokens (Util.join rest)
     | ">" :: "=" :: rest -> GreaterThanOrEqual :: tokens (Util.join rest)
     | ">" :: rest -> GreaterThan :: tokens (Util.join rest)
+    | "," :: rest -> Comma :: tokens (Util.join rest)
     | _ :: _ ->
         let token = get_int_or_id_token sub_input in
         let token_length = token_length token in

@@ -3,7 +3,7 @@ open Ccaml
 let test_transpile () =
   Alcotest.(check string)
     "return 29 program"
-    ".globl  main\n\
+    "  .global main\n\
      main:\n\
     \  push %rbp\n\
     \  movq %rsp, %rbp\n\
@@ -53,5 +53,14 @@ let () =
             (test_transpile_error
                (Util.read "../../../examples/invalid/undeclared2.c")
                (Failure "'a' undeclared (first use in this function)."));
+          Alcotest.test_case "number of arguments doesn't match prototype"
+            `Quick
+            (test_transpile_error
+               (Util.read "../../../examples/invalid/declaration_mismatch.c")
+               (Failure "number of arguments doesn't match prototype."));
+          Alcotest.test_case "function redefinition" `Quick
+            (test_transpile_error
+               (Util.read "../../../examples/invalid/function_redef.c")
+               (Failure "redefinition of 'foo'."));
         ] );
     ]

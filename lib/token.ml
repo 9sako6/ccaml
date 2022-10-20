@@ -43,6 +43,8 @@ type token =
   | GreaterThan
   (* >= *)
   | GreaterThanOrEqual
+  (* , *)
+  | Comma
   (* int *)
   | IntKeyword
   (* return *)
@@ -80,6 +82,7 @@ let to_string = function
   | LessThanOrEqual -> "<="
   | GreaterThan -> ">"
   | GreaterThanOrEqual -> ">="
+  | Comma -> ","
   | ReturnKeyword -> "RETURN"
   | IntKeyword -> "INT"
   | IfKeyword -> "IF"

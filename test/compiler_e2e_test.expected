@@ -1,5 +1,5 @@
 -- add.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -19,7 +19,7 @@ main:
   ret
 
 -- and.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -38,7 +38,7 @@ goal_of_and_clause_0:
   ret
 
 -- assign.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -53,7 +53,7 @@ main:
   ret
 
 -- assign2.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -74,7 +74,7 @@ main:
   ret
 
 -- assign3.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -90,7 +90,7 @@ main:
   ret
 
 -- assign_ternary.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -112,7 +112,7 @@ ternary_after_else_1:
   ret
 
 -- associativity.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -148,7 +148,7 @@ main:
   ret
 
 -- associativity2.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -201,7 +201,7 @@ goal_of_or_clause_2:
   ret
 
 -- block.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -217,7 +217,7 @@ main:
   ret
 
 -- block2.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -233,7 +233,7 @@ main:
   ret
 
 -- block3.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -249,7 +249,7 @@ main:
   ret
 
 -- block4.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -269,7 +269,7 @@ main:
   ret
 
 -- block5.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -285,7 +285,7 @@ main:
   ret
 
 -- block6.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -313,7 +313,7 @@ main:
   ret
 
 -- block7.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -339,7 +339,7 @@ main:
   ret
 
 -- block8.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -357,7 +357,7 @@ main:
   ret
 
 -- block_nested.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -389,7 +389,7 @@ main:
 after_else_3:
 
 -- declare_var.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -402,7 +402,7 @@ main:
   ret
 
 -- div.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -424,7 +424,7 @@ main:
   ret
 
 -- else.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -444,7 +444,7 @@ else_4:
 after_else_4:
 
 -- eq.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -460,8 +460,133 @@ main:
   pop %rbp
   ret
 
+-- expression_args.c --
+  .global add
+add:
+  push %rbp
+  movq %rsp, %rbp
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov 24(%rbp), %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $4, %rax
+  mov %rax, %rsi
+  pushq %rax
+  mov $1, %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rax, %rsi
+  pushq %rax
+  call add
+  add $16, %rsp
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  pushq %rax
+  mov -8(%rbp), %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- fib.c --
+  .global fib
+fib:
+  push %rbp
+  movq %rsp, %rbp
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov $0, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  sete %al
+  movzb %al, %rax
+  cmp $0, %rax
+  je right_of_or_clause_6
+  mov $1, %rax
+  jmp goal_of_or_clause_6
+right_of_or_clause_6:
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov $1, %rax
+  mov %rax, %rcx
+  popq %rax
+  cmp %rcx, %rax
+  sete %al
+  movzb %al, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_6:
+  cmp $0, %rax
+  je else_5
+  mov 16(%rbp), %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  jmp after_else_5
+else_5:
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov $1, %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call fib
+  add $8, %rsp
+  pushq %rax
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov $2, %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call fib
+  add $8, %rsp
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+after_else_5:
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  sub $8, %rsp
+  mov $5, %rax
+  mov %rax, -8(%rbp)
+  mov -8(%rbp), %rax
+  mov %rax, %rdi
+  pushq %rax
+  call fib
+  add $8, %rsp
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- for.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -473,7 +598,7 @@ main:
   mov %rax, -16(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L5:
+L7:
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -483,10 +608,10 @@ L5:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L7
+  je L9
   mov -8(%rbp), %rax
   mov %rax, -16(%rbp)
-L6:
+L8:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -494,15 +619,15 @@ L6:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L5
-L7:
+  jmp L7
+L9:
   mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for2.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -510,7 +635,7 @@ main:
   mov %rax, -8(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L8:
+L10:
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -520,8 +645,8 @@ L8:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L10
-L9:
+  je L12
+L11:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -529,15 +654,15 @@ L9:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L8
-L10:
+  jmp L10
+L12:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for3.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -548,7 +673,7 @@ main:
   mov %rax, -16(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L11:
+L13:
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -558,10 +683,10 @@ L11:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L13
+  je L15
   mov -8(%rbp), %rax
   mov %rax, -16(%rbp)
-L12:
+L14:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -569,15 +694,15 @@ L12:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L11
-L13:
+  jmp L13
+L15:
   mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for4.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -587,7 +712,7 @@ main:
   sub $8, %rsp
   mov $1, %rax
   mov %rax, -16(%rbp)
-L14:
+L16:
   mov -16(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -597,7 +722,7 @@ L14:
   setle %al
   movzb %al, %rax
   cmp $0, %rax
-  je L16
+  je L18
   mov -8(%rbp), %rax
   pushq %rax
   mov -16(%rbp), %rax
@@ -605,7 +730,7 @@ L14:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-L15:
+L17:
   mov -16(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -613,15 +738,15 @@ L15:
   popq %rax
   add %rcx, %rax
   mov %rax, -16(%rbp)
-  jmp L14
-L16:
+  jmp L16
+L18:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for5.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -631,7 +756,7 @@ main:
   sub $8, %rsp
   mov $0, %rax
   mov %rax, -16(%rbp)
-L17:
+L19:
   mov -16(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -641,11 +766,11 @@ L17:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L19
+  je L21
   sub $8, %rsp
   mov $0, %rax
   mov %rax, -24(%rbp)
-L20:
+L22:
   mov -24(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -655,7 +780,7 @@ L20:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L22
+  je L24
   mov -8(%rbp), %rax
   pushq %rax
   mov -16(%rbp), %rax
@@ -668,7 +793,7 @@ L20:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-L21:
+L23:
   mov -24(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -676,9 +801,9 @@ L21:
   popq %rax
   add %rcx, %rax
   mov %rax, -24(%rbp)
-  jmp L20
-L22:
-L18:
+  jmp L22
+L24:
+L20:
   mov -16(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -686,15 +811,15 @@ L18:
   popq %rax
   add %rcx, %rax
   mov %rax, -16(%rbp)
-  jmp L17
-L19:
+  jmp L19
+L21:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for6.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -703,7 +828,7 @@ main:
   mov %rax, -8(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L23:
+L25:
   mov -8(%rbp), %rax
   pushq %rax
   mov $3, %rax
@@ -713,7 +838,7 @@ L23:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L25
+  je L27
   mov -8(%rbp), %rax
   pushq %rax
   mov $2, %rax
@@ -721,7 +846,7 @@ L23:
   popq %rax
   imul %rcx, %rax
   mov %rax, -8(%rbp)
-L24:
+L26:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -729,15 +854,15 @@ L24:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L23
-L25:
+  jmp L25
+L27:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for_break.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -745,7 +870,7 @@ main:
   mov %rax, -8(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L26:
+L28:
   mov -8(%rbp), %rax
   pushq %rax
   mov $100, %rax
@@ -755,7 +880,7 @@ L26:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L28
+  je L30
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -765,11 +890,11 @@ L26:
   setg %al
   movzb %al, %rax
   cmp $0, %rax
-  je after_else_29
-  jmp L28
-  jmp after_else_29
-after_else_29:
-L27:
+  je after_else_31
+  jmp L30
+  jmp after_else_31
+after_else_31:
+L29:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -777,15 +902,15 @@ L27:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L26
-L28:
+  jmp L28
+L30:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- for_continue.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -796,7 +921,7 @@ main:
   mov %rax, -16(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L30:
+L32:
   mov -8(%rbp), %rax
   pushq %rax
   mov $100, %rax
@@ -806,7 +931,7 @@ L30:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L32
+  je L34
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -816,10 +941,10 @@ L30:
   setg %al
   movzb %al, %rax
   cmp $0, %rax
-  je after_else_33
-  jmp L31
-  jmp after_else_33
-after_else_33:
+  je after_else_35
+  jmp L33
+  jmp after_else_35
+after_else_35:
   mov -16(%rbp), %rax
   pushq %rax
   mov -8(%rbp), %rax
@@ -827,7 +952,7 @@ after_else_33:
   popq %rax
   add %rcx, %rax
   mov %rax, -16(%rbp)
-L31:
+L33:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -835,15 +960,45 @@ L31:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L30
-L32:
+  jmp L32
+L34:
   mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
+-- forward_decl_multi_arg.c --
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $2, %rax
+  mov %rax, %rsi
+  pushq %rax
+  mov $1, %rax
+  mov %rax, %rsi
+  pushq %rax
+  call foo
+  add $16, %rsp
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  .global foo
+foo:
+  push %rbp
+  movq %rsp, %rbp
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov 24(%rbp), %rax
+  mov %rax, %rcx
+  popq %rax
+  sub %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- greater.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -860,7 +1015,7 @@ main:
   ret
 
 -- greater_or_equal.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -876,43 +1031,123 @@ main:
   pop %rbp
   ret
 
+-- hello_world.c --
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $72, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $101, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $44, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $32, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $87, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $111, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $114, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $108, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $100, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $33, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call putchar
+  add $8, %rsp
+  mov $0, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- if.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
-  je after_else_34
+  je after_else_36
   mov $2, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_34
-after_else_34:
+  jmp after_else_36
+after_else_36:
 
 -- if_else.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
   mov $1, %rax
   cmp $0, %rax
-  je else_35
+  je else_37
   mov $2, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_35
-else_35:
+  jmp after_else_37
+else_37:
   mov $1, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_35:
+after_else_37:
 
 -- if_nested.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -924,26 +1159,26 @@ main:
   mov %rax, -16(%rbp)
   mov -8(%rbp), %rax
   cmp $0, %rax
-  je else_36
+  je else_38
   mov $1, %rax
   mov %rax, -16(%rbp)
-  jmp after_else_36
-else_36:
+  jmp after_else_38
+else_38:
   mov -16(%rbp), %rax
   cmp $0, %rax
-  je after_else_37
+  je after_else_39
   mov $2, %rax
   mov %rax, -16(%rbp)
-  jmp after_else_37
-after_else_37:
-after_else_36:
+  jmp after_else_39
+after_else_39:
+after_else_38:
   mov -16(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- if_nested_block.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -952,7 +1187,7 @@ main:
   mov %rax, -8(%rbp)
   mov -8(%rbp), %rax
   cmp $0, %rax
-  je else_38
+  je else_40
   sub $8, %rsp
   mov $2, %rax
   mov %rax, -16(%rbp)
@@ -960,8 +1195,8 @@ main:
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_38
-else_38:
+  jmp after_else_40
+else_40:
   sub $8, %rsp
   mov $3, %rax
   mov %rax, -16(%rbp)
@@ -974,26 +1209,26 @@ else_38:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je else_39
+  je else_41
   mov $4, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-  jmp after_else_39
-else_39:
+  jmp after_else_41
+else_41:
   mov $5, %rax
   mov %rbp, %rsp
   pop %rbp
   ret
-after_else_39:
-after_else_38:
+after_else_41:
+after_else_40:
   mov -8(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- less.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1010,7 +1245,7 @@ main:
   ret
 
 -- less_or_equal.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1027,7 +1262,7 @@ main:
   ret
 
 -- mult.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1047,7 +1282,7 @@ main:
   ret
 
 -- nested_for_break.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1062,7 +1297,7 @@ main:
   mov %rax, -24(%rbp)
   mov $0, %rax
   mov %rax, -8(%rbp)
-L40:
+L42:
   mov -8(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -1072,10 +1307,10 @@ L40:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L42
+  je L44
   mov $0, %rax
   mov %rax, -16(%rbp)
-L43:
+L45:
   mov -16(%rbp), %rax
   pushq %rax
   mov $10, %rax
@@ -1085,7 +1320,7 @@ L43:
   setl %al
   movzb %al, %rax
   cmp $0, %rax
-  je L45
+  je L47
   mov -24(%rbp), %rax
   pushq %rax
   mov -16(%rbp), %rax
@@ -1102,11 +1337,11 @@ L43:
   setg %al
   movzb %al, %rax
   cmp $0, %rax
-  je after_else_46
-  jmp L45
-  jmp after_else_46
-after_else_46:
-L44:
+  je after_else_48
+  jmp L47
+  jmp after_else_48
+after_else_48:
+L46:
   mov -16(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -1114,8 +1349,8 @@ L44:
   popq %rax
   add %rcx, %rax
   mov %rax, -16(%rbp)
-  jmp L43
-L45:
+  jmp L45
+L47:
   mov -24(%rbp), %rax
   pushq %rax
   mov -8(%rbp), %rax
@@ -1123,7 +1358,7 @@ L45:
   popq %rax
   add %rcx, %rax
   mov %rax, -24(%rbp)
-L41:
+L43:
   mov -8(%rbp), %rax
   pushq %rax
   mov $1, %rax
@@ -1131,15 +1366,34 @@ L41:
   popq %rax
   add %rcx, %rax
   mov %rax, -8(%rbp)
-  jmp L40
-L42:
+  jmp L42
+L44:
   mov -24(%rbp), %rax
   mov %rbp, %rsp
   pop %rbp
   ret
 
+-- no_args.c --
+  .global three
+three:
+  push %rbp
+  movq %rsp, %rbp
+  mov $3, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  call three
+  add $0, %rsp
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
 -- not_eq.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1155,32 +1409,39 @@ main:
   pop %rbp
   ret
 
--- or.c --
-.globl  main
+-- one_arg.c --
+  .global foo
+foo:
+  push %rbp
+  movq %rsp, %rbp
+  mov 16(%rbp), %rax
+  pushq %rax
+  mov $1, %rax
+  mov %rax, %rcx
+  popq %rax
+  add %rcx, %rax
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
-  mov $2, %rax
-  cmp $0, %rax
-  je right_of_or_clause_47
-  mov $1, %rax
-  jmp goal_of_or_clause_47
-right_of_or_clause_47:
-  mov $0, %rax
-  cmp $0, %rax
-  setne %al
-  movzb %al, %rax
-goal_of_or_clause_47:
+  mov $10, %rax
+  mov %rax, %rdi
+  pushq %rax
+  call foo
+  add $8, %rsp
   mov %rbp, %rsp
   pop %rbp
   ret
 
--- or2.c --
-.globl  main
+-- or.c --
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
-  mov $0, %rax
+  mov $2, %rax
   cmp $0, %rax
   je right_of_or_clause_49
   mov $1, %rax
@@ -1191,22 +1452,42 @@ right_of_or_clause_49:
   setne %al
   movzb %al, %rax
 goal_of_or_clause_49:
+  mov %rbp, %rsp
+  pop %rbp
+  ret
+
+-- or2.c --
+  .global main
+main:
+  push %rbp
+  movq %rsp, %rbp
+  mov $0, %rax
   cmp $0, %rax
-  je right_of_or_clause_48
+  je right_of_or_clause_51
   mov $1, %rax
-  jmp goal_of_or_clause_48
-right_of_or_clause_48:
+  jmp goal_of_or_clause_51
+right_of_or_clause_51:
+  mov $0, %rax
+  cmp $0, %rax
+  setne %al
+  movzb %al, %rax
+goal_of_or_clause_51:
+  cmp $0, %rax
+  je right_of_or_clause_50
+  mov $1, %rax
+  jmp goal_of_or_clause_50
+right_of_or_clause_50:
   mov $1, %rax
   cmp $0, %rax
   setne %al
   movzb %al, %rax
-goal_of_or_clause_48:
+goal_of_or_clause_50:
   mov %rbp, %rsp
   pop %rbp
   ret
 
 -- return_29.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1216,7 +1497,7 @@ main:
   ret
 
 -- return_exclamation_1.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1229,7 +1510,7 @@ main:
   ret
 
 -- return_minus_42.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1240,7 +1521,7 @@ main:
   ret
 
 -- return_tilde_42.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1251,7 +1532,7 @@ main:
   ret
 
 -- sub.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1266,7 +1547,7 @@ main:
   ret
 
 -- sub_neg.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1282,7 +1563,7 @@ main:
   ret
 
 -- unused_exp.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1298,7 +1579,7 @@ main:
   ret
 
 -- unused_exp2.c --
-.globl  main
+  .global main
 main:
   push %rbp
   movq %rsp, %rbp
@@ -1349,6 +1630,10 @@ main:
 3
 -- eq.c --
 0
+-- expression_args.c --
+14
+-- fib.c --
+5
 -- for.c --
 9
 -- for2.c --
@@ -1365,10 +1650,15 @@ main:
 11
 -- for_continue.c --
 55
+-- forward_decl_multi_arg.c --
+255
 -- greater.c --
 1
 -- greater_or_equal.c --
 1
+-- hello_world.c --
+Hello, World!
+0
 -- if.c --
 2
 -- if_else.c --
@@ -1385,8 +1675,12 @@ main:
 12
 -- nested_for_break.c --
 151
+-- no_args.c --
+3
 -- not_eq.c --
 1
+-- one_arg.c --
+11
 -- or.c --
 1
 -- or2.c --
