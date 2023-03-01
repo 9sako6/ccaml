@@ -12,6 +12,7 @@ bug-reports: "https://github.com/9sako6/ccaml/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.4"}
+  "alcotest" {with-test}
   "odoc" {with-doc}
 ]
 build: [

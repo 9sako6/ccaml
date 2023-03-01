@@ -19,7 +19,7 @@
  (name ccaml)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune)
+ (depends ocaml dune (alcotest :with-test))
  (tags
   (topics "to describe" your project)))
 
